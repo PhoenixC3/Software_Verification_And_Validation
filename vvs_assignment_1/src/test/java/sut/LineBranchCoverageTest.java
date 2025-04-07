@@ -17,118 +17,91 @@ public class LineBranchCoverageTest {
         tst = new TST<>();
     }
 
-    // ======================================
-    // Line Coverage: Covers size()
-    // ======================================
-
+    // Line Coverage: size() : n == 0
     @Test
     public void testSizeInitiallyZero() {
-        // Covers: return n; when n == 0
         assertEquals(0, tst.size()); 
     }
 
+    // Line Coverage: size() : n != 0
     @Test
     public void testPutAndSizeIncrements() {
-        // Covers: n++ in put() when key is new
-        // Covers: return n; when n > 0
-        tst.put("cat", "meow");
-        tst.put("dog", "bark");
+        tst.put("cat", "1");
+        tst.put("dog", "2");
 
         assertEquals(2, tst.size()); 
     }
 
-    // ======================================
-    // Line + Branch Coverage: TST.put() and TST.get()
-    // ======================================
-
+    // Line + Branch Coverage: put() and get() : overwrite key and get() value
     @Test
     public void testPutOverwriteValue() {
-        // Covers: path where key already exists, skips n++
-        // Covers: (overwrite x.val)
-        // Covers: get() traversal branches
-        tst.put("cat", "meow");
-        tst.put("cat", "purrr");
+        tst.put("cat", "1");
+        tst.put("cat", "2");
 
-        assertEquals(1, tst.size()); // put avoids increment
-        assertEquals("purrr", tst.get("cat")); // updated value fetched
+        assertEquals(1, tst.size());
+        assertEquals("2", tst.get("cat"));
     }
 
+    // Line + Branch Coverage: put() and get() : put() new key and get() value, and null value
     @Test
     public void testGetReturnsCorrectValue() {
-        // Covers: new insertion via put()
-        // Covers: all traversal cases in get(Node, key, d): <, >, ==, leaf
-        tst.put("bat", "fly");
+        tst.put("bat", "1");
 
-        assertEquals("fly", tst.get("bat"));
-        assertNull(tst.get("bad")); // x == null path in get()
+        assertEquals("1", tst.get("bat"));
+        assertNull(tst.get("bad"));
     }
 
+    // get() : null key
     @Test
     public void testGetNullKeyThrows() {
-        // Covers: get(String) throws IllegalArgumentException on null
         assertThrows(IllegalArgumentException.class, () -> tst.get(null)); 
     }
 
+    // get() : empty key
     @Test
     public void testGetEmptyKeyThrows() {
-        // Covers: get(String) throws on empty string
         assertThrows(IllegalArgumentException.class, () -> tst.get("")); 
     }
 
-    // ======================================
-    // Branch Coverage: TST.contains()
-    // ======================================
-
+    // Branch Coverage: contains() : true and false paths
     @Test
     public void testContainsKey() {
-        // Covers: contains() true path
-        // Covers: contains() false path
-        tst.put("cow", "moo");
+        tst.put("cow", "1");
 
         assertTrue(tst.contains("cow"));
         assertFalse(tst.contains("sheep"));
     }
 
+    // contains() : null key
     @Test
     public void testContainsNullKeyThrows() {
-        // Covers: null key check in contains()
         assertThrows(IllegalArgumentException.class, () -> tst.contains(null)); 
     }
 
-    // ======================================
-    // Line + Branch Coverage: longestPrefixOf()
-    // ======================================
-
+    // Line + Branch Coverage: longestPrefixOf() : partial match and full match
     @Test
     public void testLongestPrefixOf() {
-        // Covers: valid match via middle branches
-        // Covers: full match ending in x.val != null
-        tst.put("car", "vehicle");
-        tst.put("cart", "push");
+        tst.put("car", "1");
+        tst.put("cart", "2");
+        tst.put("cat", "3");
 
-        assertEquals("car", tst.longestPrefixOf("carbon")); // partial match
-        assertEquals("cart", tst.longestPrefixOf("cartwheel")); // full match
+        assertEquals("car", tst.longestPrefixOf("cargo"));
+        assertEquals("cat", tst.longestPrefixOf("cat"));
     }
 
+    // null input and empty string
     @Test
     public void testLongestPrefixOfEmptyOrNull() {
-        // Covers: null input throws
-        // Covers: length == 0 returns null
         assertNull(tst.longestPrefixOf(""));
         assertThrows(IllegalArgumentException.class, () -> tst.longestPrefixOf(null)); 
     }
 
-    // ======================================
-    // Line Coverage: keys()
-    // ======================================
-
+    // Line Coverage: keys() : full trie traversal and appending to queue
     @Test
     public void testKeys() {
-        // Covers: keys() traversal
-        // Covers: full trie traversal and appending to queue
-        tst.put("apple", "fruit");
-        tst.put("banana", "fruit");
-        tst.put("avocado", "fruit");
+        tst.put("apple", "1");
+        tst.put("banana", "2");
+        tst.put("avocado", "3");
 
         List<String> keys = new ArrayList<>();
         tst.keys().forEach(keys::add);
@@ -138,18 +111,13 @@ public class LineBranchCoverageTest {
         assertTrue(keys.contains("avocado"));
     }
 
-    // ======================================
-    // Branch Coverage: keysWithPrefix()
-    // ======================================
-
+    // Branch Coverage: keysWithPrefix() : prefix match and subtree traversal, add prefix
     @Test
     public void testKeysWithPrefix() {
-        // Covers: prefix match and subtree traversal
-        // Covers: x.val != null adds prefix
-        tst.put("app", "a");
-        tst.put("apple", "b");
-        tst.put("application", "c");
-        tst.put("bat", "d");
+        tst.put("app", "1");
+        tst.put("apple", "2");
+        tst.put("application", "3");
+        tst.put("bat", "4");
 
         Iterable<String> results = tst.keysWithPrefix("app");
         List<String> list = new ArrayList<>();
@@ -158,34 +126,54 @@ public class LineBranchCoverageTest {
         assertTrue(list.contains("app"));
         assertTrue(list.contains("apple"));
         assertTrue(list.contains("application"));
-        assertFalse(list.contains("bat")); // not matching prefix
+        assertFalse(list.contains("bat"));
     }
 
+    // keysWithPrefix() : null input
     @Test
     public void testKeysWithPrefixNullThrows() {
-        // Covers: null input check
         assertThrows(IllegalArgumentException.class, () -> tst.keysWithPrefix(null)); 
     }
 
-    // ======================================
-    // Line + Branch Coverage: keysThatMatch()
-    // ======================================
+    // Line + Branch Coverage: keysThatMatch() : exact match, wildcard match, and no match
+    @Test
+    public void testKeysThatMatchExact() {
+        tst.put("dog", "1");
+
+        List<String> result = new ArrayList<>();
+        for (String k : tst.keysThatMatch("dog")) {
+            result.add(k);
+        }
+
+        assertEquals(List.of("dog"), result);
+    }
 
     @Test
-    public void testKeysThatMatch() {
-        // Covers: all branching in wildcard logic
-        // Covers: . as wildcard, mid match, left and right recursion
-        tst.put("bad", "x");
-        tst.put("bed", "y");
-        tst.put("bid", "z");
+    public void testKeysThatMatchWithWildcard() {
+        tst.put("dog", "1");
+        tst.put("dig", "2");
+        tst.put("dug", "3");
 
-        Iterable<String> matches = tst.keysThatMatch("b.d");
-        List<String> matchList = new ArrayList<>();
-        matches.forEach(matchList::add);
+        List<String> matches = new ArrayList<>();
+        for (String k : tst.keysThatMatch("d.g")) {
+            matches.add(k);
+        }
+
+        assertTrue(matches.contains("dog"));
+        assertTrue(matches.contains("dig"));
+        assertTrue(matches.contains("dug"));
+        assertEquals(3, matches.size());
+    }
+
+    @Test
+    public void testKeysThatMatchNoMatch() {
+        tst.put("apple", "1");
+
+        List<String> result = new ArrayList<>();
+        for (String k : tst.keysThatMatch("z...")) {
+            result.add(k);
+        }
         
-        assertEquals(3, matchList.size());
-        assertTrue(matchList.contains("bad"));
-        assertTrue(matchList.contains("bed"));
-        assertTrue(matchList.contains("bid"));
+        assertTrue(result.isEmpty());
     }
 }
