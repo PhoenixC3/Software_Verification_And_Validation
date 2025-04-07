@@ -31,10 +31,10 @@ import org.junit.jupiter.api.BeforeEach;
 // length defs : 5, 14
 // query defs : -
 
-// x uses: 5, 6, 8, 10, 12, 13, 15
-// i uses: 5, 6, 7, 12, 14
-// c uses: 7, 8, 10
-// length uses: 5, 14, 16
+// x uses: 6, 8, 9, 10, 13, 15
+// i uses: 6, 7, 12, 14
+// c uses: 8, 10
+// length uses: 16
 // query uses: 1, 3, 6, 7, 16
 
 public class AllDuPathsCoverageTest {
