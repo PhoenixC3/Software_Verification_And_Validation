@@ -29,50 +29,61 @@ public class LogicBasedCoverageTest {
 
     // Covers: (query == null)
     @Test
-    public void testNullQuery_throwsException() {
+    public void lb1() {
         assertThrows(IllegalArgumentException.class, () -> tst.longestPrefixOf(null));
     }
 
     // Covers: (query.length() == 0)
     @Test
-    public void testEmptyQuery_returnsNull() {
+    public void lb2() {
         assertNull(tst.longestPrefixOf(""));
     }
 
+    // Covers: (query != null)
+    // Covers: (query.length() != 0)
+    // Covers: (x == null && i < query.length())
+    @Test
+    public void lb3() {
+        assertNull(tst.longestPrefixOf("dog"));
+    }
+
+    // Covers: (query != null)
+    // Covers: (query.length() != 0)
     // Covers: (x != null && i < query.length())
     // Covers: (c < x.c)
-    // Covers: (c > x.c)
     @Test
-    public void testNoMatchingPrefix_returnsEmptyString() {
+    public void lb4() {
         tst.put("dog", "1");
         assertEquals("", tst.longestPrefixOf("cat"));
     }
 
+    // Covers: (query != null)
+    // Covers: (query.length() != 0)
     // Covers: (x != null && i < query.length())
-    // Covers: (c < x.c)
     // Covers: (c > x.c)
-    // Covers: (x.val != null)
     @Test
-    public void testPartialMatch_returnsCorrectPrefix() {
+    public void lb5() {
+        tst.put("dog", "1");
+        assertEquals("", tst.longestPrefixOf("eel"));
+    }
+
+    // Covers: (query != null)
+    // Covers: (query.length() != 0)
+    // Covers: (x != null && i < query.length())
+    // Covers: (x.val == null)
+    @Test
+    public void lb6() {
         tst.put("car", "1");
-        tst.put("cart", "2");
-        tst.put("carry", "3");
-        assertEquals("cart", tst.longestPrefixOf("cartoon"));
+        assertEquals("", tst.longestPrefixOf("c"));
     }
 
+    // Covers: (query != null)
+    // Covers: (query.length() != 0)
     // Covers: (x != null && i < query.length())
     // Covers: (x.val != null)
     @Test
-    public void testFullMatch_returnsQuery() {
-        tst.put("hello", "1");
-        assertEquals("hello", tst.longestPrefixOf("hello"));
-    }
-
-    // Covers: (x != null && i < query.length())
-    @Test
-    public void testPrefixWithNoValue_returnsShorterMatch() {
-        tst.put("a", "1");
-        tst.put("ab", null);
-        assertEquals("a", tst.longestPrefixOf("abc"));
+    public void lb7() {
+        tst.put("h", "1");
+        assertEquals("h", tst.longestPrefixOf("h"));
     }
 }
