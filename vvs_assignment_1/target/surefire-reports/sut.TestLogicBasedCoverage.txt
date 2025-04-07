@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
-Test set: sut.AllDuPathsCoverageTest
+Test set: sut.TestLogicBasedCoverage
 -------------------------------------------------------------------------------
-Tests run: 19, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.04 sec - in sut.AllDuPathsCoverageTest
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 sec - in sut.TestLogicBasedCoverage

@@ -1,16 +1,16 @@
 package sut;
 
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.Before;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 // All-Coupling-Use-Paths Coverage for private method put
 
-public class AllCouplingUsePathsCoverageTest {
+public class TestAllCouplingUsePathsCoverage {
 
     private TST<String> tst;
 
-    @BeforeEach
+    @Before
     public void setUp() {
         tst = new TST<>();
     }

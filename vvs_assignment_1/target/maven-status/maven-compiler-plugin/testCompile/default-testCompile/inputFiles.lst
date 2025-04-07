@@ -1,6 +1,6 @@
-C:\Users\Tiago Almeida\Desktop\Escola\Faculdade\Mestrado\1A2S\VVS\Projeto\VVS_24-25\vvs_assignment_1\src\test\java\sut\AllDuPathsCoverageTest.java
-C:\Users\Tiago Almeida\Desktop\Escola\Faculdade\Mestrado\1A2S\VVS\Projeto\VVS_24-25\vvs_assignment_1\src\test\java\sut\BaseChoiceCoverageTest.java
-C:\Users\Tiago Almeida\Desktop\Escola\Faculdade\Mestrado\1A2S\VVS\Projeto\VVS_24-25\vvs_assignment_1\src\test\java\sut\LineBranchCoverageTest.java
-C:\Users\Tiago Almeida\Desktop\Escola\Faculdade\Mestrado\1A2S\VVS\Projeto\VVS_24-25\vvs_assignment_1\src\test\java\sut\EdgePairPrimePathCoverageTests.java
-C:\Users\Tiago Almeida\Desktop\Escola\Faculdade\Mestrado\1A2S\VVS\Projeto\VVS_24-25\vvs_assignment_1\src\test\java\sut\LogicBasedCoverageTest.java
-C:\Users\Tiago Almeida\Desktop\Escola\Faculdade\Mestrado\1A2S\VVS\Projeto\VVS_24-25\vvs_assignment_1\src\test\java\sut\AllCouplingUsePathsCoverageTest.java
+C:\Users\Tiago Almeida\Desktop\Escola\Faculdade\Mestrado\1A2S\VVS\Projeto\VVS_24-25\vvs_assignment_1\src\test\java\sut\TestLineBranchCoverage.java
+C:\Users\Tiago Almeida\Desktop\Escola\Faculdade\Mestrado\1A2S\VVS\Projeto\VVS_24-25\vvs_assignment_1\src\test\java\sut\TestAllDuPathsCoverage.java
+C:\Users\Tiago Almeida\Desktop\Escola\Faculdade\Mestrado\1A2S\VVS\Projeto\VVS_24-25\vvs_assignment_1\src\test\java\sut\TestLogicBasedCoverage.java
+C:\Users\Tiago Almeida\Desktop\Escola\Faculdade\Mestrado\1A2S\VVS\Projeto\VVS_24-25\vvs_assignment_1\src\test\java\sut\TestBaseChoiceCoverage.java
+C:\Users\Tiago Almeida\Desktop\Escola\Faculdade\Mestrado\1A2S\VVS\Projeto\VVS_24-25\vvs_assignment_1\src\test\java\sut\TestAllCouplingUsePathsCoverage.java
+C:\Users\Tiago Almeida\Desktop\Escola\Faculdade\Mestrado\1A2S\VVS\Projeto\VVS_24-25\vvs_assignment_1\src\test\java\sut\TestEdgePairPrimePathCoverage.java

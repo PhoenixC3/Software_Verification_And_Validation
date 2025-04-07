@@ -1,8 +1,8 @@
 package sut;
 
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.Before;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 // For method put, include a test set based of Input State Partitioning, namely
 // Base Choice Coverage, using the following characteristics:
@@ -25,12 +25,12 @@ import org.junit.jupiter.api.BeforeEach;
 // Base Choice: Key is a typical key.
 // Others: Key is the smallest or largest in lexicographic order.
 
-public class BaseChoiceCoverageTest {
+public class TestBaseChoiceCoverage {
 
     private TST<String> tst;
 
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void setUp() {
         tst = new TST<>();
     }
 

@@ -1,18 +1,20 @@
 package sut;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import java.util.*;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Before;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 // Line and Branch Coverage for all public methods.
 // Public methods: size, contains, get, put, longestPrefixOf, keys, keysWithPrefix, keysThatMatch
 
-public class LineBranchCoverageTest {
+public class TestLineBranchCoverage {
 
     private TST<String> tst;
 
-    @BeforeEach
+    @Before
     public void setUp() {
         tst = new TST<>();
     }
@@ -49,15 +51,15 @@ public class LineBranchCoverageTest {
     }
 
     // get() : null key
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testGetNullKeyThrows() {
-        assertThrows(IllegalArgumentException.class, () -> tst.get(null)); 
+        tst.get(null); 
     }
 
     // get() : empty key
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testGetEmptyKeyThrows() {
-        assertThrows(IllegalArgumentException.class, () -> tst.get("")); 
+        tst.get("");
     }
 
     // Branch Coverage: contains() : true and false paths
@@ -69,9 +71,9 @@ public class LineBranchCoverageTest {
     }
 
     // contains() : null key
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testContainsNullKeyThrows() {
-        assertThrows(IllegalArgumentException.class, () -> tst.contains(null)); 
+        tst.contains(null);
     }
 
     // Line + Branch Coverage: longestPrefixOf() : partial match and full match
@@ -85,10 +87,10 @@ public class LineBranchCoverageTest {
     }
 
     // null input and empty string
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testLongestPrefixOfEmptyOrNull() {
         assertNull(tst.longestPrefixOf(""));
-        assertThrows(IllegalArgumentException.class, () -> tst.longestPrefixOf(null)); 
+        tst.longestPrefixOf(null);
     }
 
     // Line Coverage: keys() : full trie traversal and appending to queue
@@ -121,9 +123,9 @@ public class LineBranchCoverageTest {
     }
 
     // keysWithPrefix() : null input
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testKeysWithPrefixNullThrows() {
-        assertThrows(IllegalArgumentException.class, () -> tst.keysWithPrefix(null)); 
+        tst.keysWithPrefix(null);
     }
 
     // Line + Branch Coverage: keysThatMatch() : exact match, wildcard match, and no match

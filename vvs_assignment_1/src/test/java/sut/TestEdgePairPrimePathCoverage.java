@@ -1,8 +1,8 @@
 package sut;
 
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.Before;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 // Edge-Pair Coverage and Prime Path Coverage for method longestPrefixOf
 
@@ -45,11 +45,11 @@ import org.junit.jupiter.api.BeforeEach;
 // 11 6
 // 15 6
 
-public class EdgePairPrimePathCoverageTests {
+public class TestEdgePairPrimePathCoverage {
 
     private TST<String> tst;
 
-    @BeforeEach
+    @Before
     public void setUp() {
         tst = new TST<>();
     }
@@ -57,9 +57,9 @@ public class EdgePairPrimePathCoverageTests {
     //----------------EDGE PAIR COVERAGE------------------
 
     // Path: [1, 2]
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void ep1() {
-        assertThrows(IllegalArgumentException.class, () -> tst.longestPrefixOf(null));
+        tst.longestPrefixOf(null);
     }
 
     // Path: [1, 3, 4]
@@ -71,7 +71,7 @@ public class EdgePairPrimePathCoverageTests {
     // Path: [1, 3, 5, 6, 16]
     @Test
     public void ep3() {
-        assertNull(tst.longestPrefixOf("anything"));
+        assertEquals("", tst.longestPrefixOf("anything"));
     }
 
     // Path: [1,3,5,6,7,8,10,12,13,15,6,16]
@@ -108,9 +108,9 @@ public class EdgePairPrimePathCoverageTests {
     //----------------PRIME PATH COVERAGE------------------
 
     // Path: [1, 2]
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void pp1() {
-        assertThrows(IllegalArgumentException.class, () -> tst.longestPrefixOf(null));
+        tst.longestPrefixOf(null);
     }
 
     // Path: [1, 3, 4]
@@ -122,7 +122,7 @@ public class EdgePairPrimePathCoverageTests {
     // Path: [1,3,5,6,16]
     @Test
     public void pp3() {
-        assertNull(tst.longestPrefixOf("anything"));
+        assertEquals("", tst.longestPrefixOf("anything"));
     }
 
     // Path: [1,3,5,6,7,8,10,12,13,14,15,6,7,8,9,6,16]

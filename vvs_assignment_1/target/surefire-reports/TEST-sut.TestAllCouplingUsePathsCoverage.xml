@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="sut.AllDuPathsCoverageTest" time="0.04" tests="19" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="sut.TestAllCouplingUsePathsCoverage" time="0.034" tests="8" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="java.vm.version" value="21.0.2+13-LTS-58"/>
@@ -44,7 +44,7 @@
     <property name="java.class.path" value="C:\Program Files\apache-maven-3.9.6\boot\plexus-classworlds-2.7.0.jar"/>
     <property name="java.vm.specification.version" value="21"/>
     <property name="sun.arch.data.model" value="64"/>
-    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher clean test"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher clean install"/>
     <property name="java.home" value="C:\Program Files\Java\jdk-21"/>
     <property name="user.language" value="en"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
@@ -60,23 +60,12 @@
     <property name="sun.cpu.endian" value="little"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase name="ad2" classname="sut.AllDuPathsCoverageTest" time="0.009"/>
-  <testcase name="ad3" classname="sut.AllDuPathsCoverageTest" time="0"/>
-  <testcase name="ad4" classname="sut.AllDuPathsCoverageTest" time="0"/>
-  <testcase name="ad5" classname="sut.AllDuPathsCoverageTest" time="0"/>
-  <testcase name="ad6" classname="sut.AllDuPathsCoverageTest" time="0.001"/>
-  <testcase name="ad7" classname="sut.AllDuPathsCoverageTest" time="0"/>
-  <testcase name="ad8" classname="sut.AllDuPathsCoverageTest" time="0"/>
-  <testcase name="ad9" classname="sut.AllDuPathsCoverageTest" time="0.001"/>
-  <testcase name="ad10" classname="sut.AllDuPathsCoverageTest" time="0"/>
-  <testcase name="ad11" classname="sut.AllDuPathsCoverageTest" time="0"/>
-  <testcase name="ad12" classname="sut.AllDuPathsCoverageTest" time="0"/>
-  <testcase name="ad13" classname="sut.AllDuPathsCoverageTest" time="0.001"/>
-  <testcase name="ad14" classname="sut.AllDuPathsCoverageTest" time="0"/>
-  <testcase name="ad15" classname="sut.AllDuPathsCoverageTest" time="0"/>
-  <testcase name="ad16" classname="sut.AllDuPathsCoverageTest" time="0.001"/>
-  <testcase name="ad17" classname="sut.AllDuPathsCoverageTest" time="0"/>
-  <testcase name="ad18" classname="sut.AllDuPathsCoverageTest" time="0"/>
-  <testcase name="ad19" classname="sut.AllDuPathsCoverageTest" time="0"/>
-  <testcase name="ad20" classname="sut.AllDuPathsCoverageTest" time="0.001"/>
+  <testcase name="testInsertRightOfMidTree" classname="sut.TestAllCouplingUsePathsCoverage" time="0.004"/>
+  <testcase name="testInsertLeftOfMidTree" classname="sut.TestAllCouplingUsePathsCoverage" time="0"/>
+  <testcase name="testOverwriteValue" classname="sut.TestAllCouplingUsePathsCoverage" time="0"/>
+  <testcase name="testMidBranchCreation" classname="sut.TestAllCouplingUsePathsCoverage" time="0"/>
+  <testcase name="testRightBranchCreation" classname="sut.TestAllCouplingUsePathsCoverage" time="0"/>
+  <testcase name="testInsertSingleKey" classname="sut.TestAllCouplingUsePathsCoverage" time="0"/>
+  <testcase name="testDeepRecursionInMidBranch" classname="sut.TestAllCouplingUsePathsCoverage" time="0.001"/>
+  <testcase name="testLeftBranchCreation" classname="sut.TestAllCouplingUsePathsCoverage" time="0"/>
 </testsuite>

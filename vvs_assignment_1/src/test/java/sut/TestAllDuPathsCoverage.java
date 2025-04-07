@@ -1,8 +1,8 @@
 package sut;
 
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.Before;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 // All-Du-Paths Coverage for method longestPrefixOf
 // Variables: x, i, c, length, query
@@ -37,19 +37,19 @@ import org.junit.jupiter.api.BeforeEach;
 // length uses: 16
 // query uses: 1, 3, 6, 7, 16
 
-public class AllDuPathsCoverageTest {
+public class TestAllDuPathsCoverage {
 
     private TST<String> tst;
     
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void setUp() {
         tst = new TST<>();
     }
 
     // Path: [1,3,5,6,16]
     @Test
     public void ad1() {
-        assertNull(tst.longestPrefixOf("anything"));
+        assertEquals("", tst.longestPrefixOf("anything"));
     }
 
     // Path: [1,3,5,6,7,8,9,6,16]

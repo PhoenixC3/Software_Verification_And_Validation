@@ -1,8 +1,8 @@
 package sut;
 
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.Before;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 // Select and apply one Logic-based test coverage for method longestPrefixOf,
 // justify your option
@@ -19,18 +19,18 @@ import org.junit.jupiter.api.BeforeEach;
 // (c > x.c)
 // (x.val != null)
 
-public class LogicBasedCoverageTest {
+public class TestLogicBasedCoverage {
     private TST<String> tst;
     
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void setUp() {
         tst = new TST<>();
     }
 
     // Covers: (query == null)
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void lb1() {
-        assertThrows(IllegalArgumentException.class, () -> tst.longestPrefixOf(null));
+        tst.longestPrefixOf(null);
     }
 
     // Covers: (query.length() == 0)
@@ -44,7 +44,7 @@ public class LogicBasedCoverageTest {
     // Covers: (x == null && i < query.length())
     @Test
     public void lb3() {
-        assertNull(tst.longestPrefixOf("dog"));
+        assertEquals("", tst.longestPrefixOf("dog"));
     }
 
     // Covers: (query != null)
