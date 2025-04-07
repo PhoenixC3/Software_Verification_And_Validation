@@ -9,55 +9,85 @@ import org.junit.jupiter.api.BeforeEach;
 public class AllCouplingUsePathsCoverageTest {
 
     private TST<String> tst;
-    
+
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         tst = new TST<>();
     }
 
-    // path: public.put → private.put (x == null)
-    // covers: key passed and char used, val stored
+    // Covers: x == null and d == key.length() - 1
     @Test
-    void acu_insertNewRootNode() {
-        tst.put("a", "val");
-        assertEquals("val", tst.get("a"));
+    public void testInsertSingleKey() {
+        tst.put("a", "1");
+        assertEquals("1", tst.get("a"));
+        assertEquals(1, tst.size());
     }
 
-    // path: public.put → private.put → private.put → private.put
-    // each call uses next char from key, passes val
-    // covers: coupling paths from key/val to recursive uses
+    // Covers: c < x.c (go left branch)
     @Test
-    void acu_insertDeepMidRecursion() {
-        tst.put("abc", "val");
-        assertEquals("val", tst.get("abc"));
-    }
-    
-    // forces c < x.c ⇒ x.left
-    @Test
-    void acu_insertLeftBranch() {
-        tst.put("c", "val1");
-        tst.put("a", "val2");
-
-        assertEquals("val1", tst.get("c"));
-        assertEquals("val2", tst.get("a"));
+    public void testLeftBranchCreation() {
+        tst.put("d", "1");
+        tst.put("b", "2");
+        assertEquals("2", tst.get("b"));
+        assertEquals(2, tst.size());
     }
 
-    // forces c > x.c ⇒ x.right
+    // Covers: c > x.c (go right branch)
     @Test
-    void acu_insertRightBranch() {
-        tst.put("a", "val1");
-        tst.put("c", "val2");
-
-        assertEquals("val1", tst.get("a"));
-        assertEquals("val2", tst.get("c"));
+    public void testRightBranchCreation() {
+        tst.put("d", "1");
+        tst.put("f", "2");
+        assertEquals("2", tst.get("f"));
+        assertEquals(2, tst.size());
     }
 
-    // reuses entire key path ⇒ key passed again, val updated
+    // Covers: x == null, c == x.c, and d < key.length() - 1
     @Test
-    void acu_overwriteValue() {
-        tst.put("cat", "first");
-        tst.put("cat", "second");
+    public void testMidBranchCreation() {
+        tst.put("cat", "1");
+        tst.put("car", "2");
+        assertEquals("1", tst.get("cat"));
+        assertEquals("2", tst.get("car"));
+        assertEquals(2, tst.size());
+    }
 
-        assertEquals("second", tst.get("cat"));
+    // Covers: x != null and d == key.length() - 1
+    @Test
+    public void testOverwriteValue() {
+        tst.put("hat", "3");
+        assertEquals("3", tst.get("hat"));
+        tst.put("hat", "5");
+        assertEquals("5", tst.get("hat"));
+        assertEquals(1, tst.size());
+    }
+
+    // Covers: Left-branch condition (c < x.c), with non-null x
+    @Test
+    public void testInsertLeftOfMidTree() {
+        tst.put("dog", "10");
+        tst.put("cat", "20");
+        assertEquals("10", tst.get("dog"));
+        assertEquals("20", tst.get("cat"));
+        assertEquals(2, tst.size());
+    }
+
+    // Covers: Right-branch condition (c > x.c), with non-null x
+    @Test
+    public void testInsertRightOfMidTree() {
+        tst.put("cat", "1");
+        tst.put("dog", "2");
+        assertEquals("1", tst.get("cat"));
+        assertEquals("2", tst.get("dog"));
+        assertEquals(2, tst.size());
+    }
+
+    // Covers: Mid branch multiple times (c == x.c and d < key.length() - 1)
+    @Test
+    public void testDeepRecursionInMidBranch() {
+        tst.put("car", "1");
+        tst.put("cart", "2");
+        assertEquals("1", tst.get("car"));
+        assertEquals("2", tst.get("cart"));
+        assertEquals(2, tst.size());
     }
 }

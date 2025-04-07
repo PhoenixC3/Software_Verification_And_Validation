@@ -11,6 +11,18 @@ import org.junit.jupiter.api.BeforeEach;
 // 3. Trie is empty
 // 4. The new key is the smallest/largest/a typical key (in lexicographic terms)
 
+// Trie State:
+// Base Choice: Trie is empty.
+// Other: Trie contains some keys.
+
+// Key Presence:
+// Base Choice: Key does not exist in the trie.
+// Other: Key already exists in the trie.
+
+// Key Lexicographic Order:
+// Base Choice: Key is a typical key.
+// Others: Key is the smallest or largest in lexicographic order.
+
 public class BaseChoiceCoverageTest {
 
     private TST<String> tst;
@@ -18,58 +30,51 @@ public class BaseChoiceCoverageTest {
     @BeforeEach
     void setUp() {
         tst = new TST<>();
-        tst.put("apple", "fruit1");
-        tst.put("banana", "fruit2");
     }
 
-    // Base case: insert typical key into non-empty trie, not already present
+    // Trie is empty, key is new (Base Case)
     @Test
-    void baseCase_typicalKeyNotPresent() {
-        tst.put("mango", "fruit3");
-        assertEquals("fruit3", tst.get("mango"));
+    public void testInsertIntoEmptyTrie() {
+        tst.put("cat", "1");
+        assertEquals("1", tst.get("cat"));
     }
 
-    // Variation 1: Key already exists
-    @Test
-    void trieAlreadyIncludesNewKey() {
-        tst.put("apple", "fruitX"); // override
-        assertEquals("fruitX", tst.get("apple"));
+    // Trie contains the key already
+    public void testInsertExistingKey() {
+        tst.put("cat", "1");
+        tst.put("cat", "2");
+        assertEquals("2", tst.get("cat"));
     }
 
-    // Variation 2: Trie already includes key prefix
+    // Trie contains a prefix of the key
     @Test
-    void trieIncludesSomePrefixOfNewKey() {
-        tst.put("ban", "prefix1");
-        tst.put("banana", "updatedBanana");
-        assertEquals("updatedBanana", tst.get("banana"));
+    public void testInsertWithExistingPrefix() {
+        tst.put("car", "1");
+        tst.put("cart", "2");
+        assertEquals("1", tst.get("car"));
+        assertEquals("2", tst.get("cart"));
     }
 
-    // Variation 3: Trie is empty
+    // Insert a typical key
     @Test
-    void trieIsInitiallyEmpty() {
-        TST<String> emptyTrie = new TST<>();
-        emptyTrie.put("grape", "fruit4");
-        assertEquals("fruit4", emptyTrie.get("grape"));
+    public void testInsertTypicalKey() {
+        tst.put("mango", "7");
+        assertEquals("7", tst.get("mango"));
     }
 
-    // Variation 4a: New key is smallest in lexicographic order
+    // Insert key with smallest lexicographic value
     @Test
-    void newKeyIsSmallest() {
-        tst.put("aardvark", "smallest");
-        assertEquals("smallest", tst.get("aardvark"));
+    public void testInsertSmallestLexKey() {
+        tst.put("ant", "1");
+        tst.put("zebra", "2");
+        assertEquals("1", tst.get("ant"));
     }
 
-    // Variation 4b: New key is largest in lexicographic order
+    // Insert key with largest lexicographic value
     @Test
-    void newKeyIsLargest() {
-        tst.put("zucchini", "largest");
-        assertEquals("largest", tst.get("zucchini"));
-    }
-
-    // Variation 4c: New key is another typical key
-    @Test
-    void newKeyIsTypicalAgain() {
-        tst.put("melon", "typical2");
-        assertEquals("typical2", tst.get("melon"));
+    public void testInsertLargestLexKey() {
+        tst.put("apple", "1");
+        tst.put("zulu", "9");
+        assertEquals("9", tst.get("zulu"));
     }
 }

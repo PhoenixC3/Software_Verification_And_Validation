@@ -7,51 +7,72 @@ import org.junit.jupiter.api.BeforeEach;
 // Select and apply one Logic-based test coverage for method longestPrefixOf,
 // justify your option
 
+// Selected Coverage Criteria: PREDICATE COVERAGE (PC)
+// Well-suited due to the logic-heavy control flow in longestPrefixOf
+// Sufficient to uncover common faults (null/empty handling, branching errors, prefix logic)
+
+// List of Predicates:
+// (query == null)
+// (query.length() == 0)
+// (x != null && i < query.length())
+// (c < x.c)
+// (c > x.c)
+// (x.val != null)
+
 public class LogicBasedCoverageTest {
     private TST<String> tst;
     
     @BeforeEach
     void setUp() {
         tst = new TST<>();
-        tst.put("she", "1");
-        tst.put("shell", "2");
-        tst.put("shore", "3");
     }
 
+    // Covers: (query == null)
     @Test
-    void mcdc_nullQuery() {
-        assertNull(tst.longestPrefixOf(null)); // query == null (true), query.length == 0 (N/A)
+    public void testNullQuery_throwsException() {
+        assertThrows(IllegalArgumentException.class, () -> tst.longestPrefixOf(null));
     }
 
+    // Covers: (query.length() == 0)
     @Test
-    void mcdc_emptyQuery() {
-        assertNull(tst.longestPrefixOf("")); // query == null (false), query.length == 0 (true)
+    public void testEmptyQuery_returnsNull() {
+        assertNull(tst.longestPrefixOf(""));
     }
 
+    // Covers: (x != null && i < query.length())
+    // Covers: (c < x.c)
+    // Covers: (c > x.c)
     @Test
-    void mcdc_noMatchingPrefix() {
-        assertNull(tst.longestPrefixOf("xylophone")); // no matching prefix, should return null
+    public void testNoMatchingPrefix_returnsEmptyString() {
+        tst.put("dog", "1");
+        assertEquals("", tst.longestPrefixOf("cat"));
     }
 
+    // Covers: (x != null && i < query.length())
+    // Covers: (c < x.c)
+    // Covers: (c > x.c)
+    // Covers: (x.val != null)
     @Test
-    void mcdc_prefixIsExactKey() {
-        assertEquals("shell", tst.longestPrefixOf("shell")); // exact match
+    public void testPartialMatch_returnsCorrectPrefix() {
+        tst.put("car", "1");
+        tst.put("cart", "2");
+        tst.put("carry", "3");
+        assertEquals("cart", tst.longestPrefixOf("cartoon"));
     }
 
+    // Covers: (x != null && i < query.length())
+    // Covers: (x.val != null)
     @Test
-    void mcdc_partialPrefixMatch() {
-        assertEquals("she", tst.longestPrefixOf("shelter")); // "she" matches, but "shelter" is not a key
+    public void testFullMatch_returnsQuery() {
+        tst.put("hello", "1");
+        assertEquals("hello", tst.longestPrefixOf("hello"));
     }
 
+    // Covers: (x != null && i < query.length())
     @Test
-    void mcdc_fullPrefixThenNonMatch() {
-        assertEquals("shell", tst.longestPrefixOf("shellfish")); // "shell" is the longest valid prefix
-    }
-
-    @Test
-    void mcdc_earlyBreakPath_xIsNull() {
-        TST<String> customTst = new TST<>();
-        customTst.put("z", "val");
-        assertNull(customTst.longestPrefixOf("a")); // breaks early due to null path
+    public void testPrefixWithNoValue_returnsShorterMatch() {
+        tst.put("a", "1");
+        tst.put("ab", null);
+        assertEquals("a", tst.longestPrefixOf("abc"));
     }
 }

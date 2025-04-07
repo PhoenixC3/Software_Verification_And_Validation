@@ -1,0 +1,6 @@
+sut\BaseChoiceCoverageTest.class
+sut\AllCouplingUsePathsCoverageTest.class
+sut\EdgePairPrimePathCoverageTests.class
+sut\AllDuPathsCoverageTest.class
+sut\LineBranchCoverageTest.class
+sut\LogicBasedCoverageTest.class

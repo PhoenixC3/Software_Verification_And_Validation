@@ -28,7 +28,6 @@ public class LineBranchCoverageTest {
     public void testPutAndSizeIncrements() {
         tst.put("cat", "1");
         tst.put("dog", "2");
-
         assertEquals(2, tst.size()); 
     }
 
@@ -37,7 +36,6 @@ public class LineBranchCoverageTest {
     public void testPutOverwriteValue() {
         tst.put("cat", "1");
         tst.put("cat", "2");
-
         assertEquals(1, tst.size());
         assertEquals("2", tst.get("cat"));
     }
@@ -46,7 +44,6 @@ public class LineBranchCoverageTest {
     @Test
     public void testGetReturnsCorrectValue() {
         tst.put("bat", "1");
-
         assertEquals("1", tst.get("bat"));
         assertNull(tst.get("bad"));
     }
@@ -67,7 +64,6 @@ public class LineBranchCoverageTest {
     @Test
     public void testContainsKey() {
         tst.put("cow", "1");
-
         assertTrue(tst.contains("cow"));
         assertFalse(tst.contains("sheep"));
     }
@@ -84,7 +80,6 @@ public class LineBranchCoverageTest {
         tst.put("car", "1");
         tst.put("cart", "2");
         tst.put("cat", "3");
-
         assertEquals("car", tst.longestPrefixOf("cargo"));
         assertEquals("cat", tst.longestPrefixOf("cat"));
     }
@@ -102,10 +97,8 @@ public class LineBranchCoverageTest {
         tst.put("apple", "1");
         tst.put("banana", "2");
         tst.put("avocado", "3");
-
         List<String> keys = new ArrayList<>();
         tst.keys().forEach(keys::add);
-
         assertTrue(keys.contains("apple"));
         assertTrue(keys.contains("banana"));
         assertTrue(keys.contains("avocado"));
@@ -118,11 +111,9 @@ public class LineBranchCoverageTest {
         tst.put("apple", "2");
         tst.put("application", "3");
         tst.put("bat", "4");
-
         Iterable<String> results = tst.keysWithPrefix("app");
         List<String> list = new ArrayList<>();
         results.forEach(list::add);
-
         assertTrue(list.contains("app"));
         assertTrue(list.contains("apple"));
         assertTrue(list.contains("application"));
@@ -139,12 +130,10 @@ public class LineBranchCoverageTest {
     @Test
     public void testKeysThatMatchExact() {
         tst.put("dog", "1");
-
         List<String> result = new ArrayList<>();
         for (String k : tst.keysThatMatch("dog")) {
             result.add(k);
         }
-
         assertEquals(List.of("dog"), result);
     }
 
@@ -153,12 +142,10 @@ public class LineBranchCoverageTest {
         tst.put("dog", "1");
         tst.put("dig", "2");
         tst.put("dug", "3");
-
         List<String> matches = new ArrayList<>();
         for (String k : tst.keysThatMatch("d.g")) {
             matches.add(k);
         }
-
         assertTrue(matches.contains("dog"));
         assertTrue(matches.contains("dig"));
         assertTrue(matches.contains("dug"));
@@ -168,12 +155,10 @@ public class LineBranchCoverageTest {
     @Test
     public void testKeysThatMatchNoMatch() {
         tst.put("apple", "1");
-
         List<String> result = new ArrayList<>();
         for (String k : tst.keysThatMatch("z...")) {
             result.add(k);
         }
-        
         assertTrue(result.isEmpty());
     }
 }
