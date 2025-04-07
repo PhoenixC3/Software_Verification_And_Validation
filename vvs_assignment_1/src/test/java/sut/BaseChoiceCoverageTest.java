@@ -11,15 +11,17 @@ import org.junit.jupiter.api.BeforeEach;
 // 3. Trie is empty
 // 4. The new key is the smallest/largest/a typical key (in lexicographic terms)
 
-// Trie State:
+// Input State Partitioning:
+
+// 1 - Trie State:
 // Base Choice: Trie is empty.
 // Other: Trie contains some keys.
 
-// Key Presence:
+// 2 - Key Presence:
 // Base Choice: Key does not exist in the trie.
 // Other: Key already exists in the trie.
 
-// Key Lexicographic Order:
+// 3 - Key Lexicographic Order:
 // Base Choice: Key is a typical key.
 // Others: Key is the smallest or largest in lexicographic order.
 
@@ -40,6 +42,7 @@ public class BaseChoiceCoverageTest {
     }
 
     // Trie contains the key already
+    @Test
     public void testInsertExistingKey() {
         tst.put("cat", "1");
         tst.put("cat", "2");
