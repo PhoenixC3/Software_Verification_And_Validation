@@ -278,5 +278,4 @@ public class TST<T> {
         if (x.c != y.c || !Objects.equals(x.val, y.val)) return false;
         return equals(x.left, y.left) && equals(x.mid, y.mid) && equals(x.right, y.right);
     }
-
 }

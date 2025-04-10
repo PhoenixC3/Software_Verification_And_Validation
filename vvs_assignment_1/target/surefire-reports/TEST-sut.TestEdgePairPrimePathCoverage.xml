@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="sut.TestEdgePairPrimePathCoverage" time="0" tests="26" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="sut.TestEdgePairPrimePathCoverage" time="0.001" tests="26" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="java.vm.version" value="21.0.2+13-LTS-58"/>
@@ -74,7 +74,7 @@
   <testcase name="pp5" classname="sut.TestEdgePairPrimePathCoverage" time="0"/>
   <testcase name="pp6" classname="sut.TestEdgePairPrimePathCoverage" time="0"/>
   <testcase name="pp7" classname="sut.TestEdgePairPrimePathCoverage" time="0"/>
-  <testcase name="pp8" classname="sut.TestEdgePairPrimePathCoverage" time="0"/>
+  <testcase name="pp8" classname="sut.TestEdgePairPrimePathCoverage" time="0.001"/>
   <testcase name="pp9" classname="sut.TestEdgePairPrimePathCoverage" time="0"/>
   <testcase name="pp10" classname="sut.TestEdgePairPrimePathCoverage" time="0"/>
   <testcase name="pp11" classname="sut.TestEdgePairPrimePathCoverage" time="0"/>
