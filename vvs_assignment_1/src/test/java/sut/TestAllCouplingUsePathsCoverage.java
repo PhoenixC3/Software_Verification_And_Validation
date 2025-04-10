@@ -15,6 +15,18 @@ public class TestAllCouplingUsePathsCoverage {
         tst = new TST<>();
     }
 
+    // Covers: key == null
+    @Test(expected = IllegalArgumentException.class)
+    public void testNullKey() {
+        tst.put(null, "1");
+    }
+
+    // Covers: key.length() == 0
+    @Test(expected = IllegalArgumentException.class)
+    public void testEmptyKey() {
+        tst.put("", "1");
+    }
+
     // Covers: x == null and d == key.length() - 1
     @Test
     public void testInsertSingleKey() {

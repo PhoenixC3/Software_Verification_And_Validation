@@ -5,10 +5,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
-
-// Line and Branch Coverage for all public methods.
-// Public methods: size, contains, get, put, longestPrefixOf, keys, keysWithPrefix, keysThatMatch
 
 public class TestLineBranchCoverage {
 
@@ -19,13 +17,11 @@ public class TestLineBranchCoverage {
         tst = new TST<>();
     }
 
-    // Line Coverage: size() : n == 0
     @Test
     public void testSizeInitiallyZero() {
         assertEquals(0, tst.size()); 
     }
 
-    // Line Coverage: size() : n != 0
     @Test
     public void testPutAndSizeIncrements() {
         tst.put("cat", "1");
@@ -33,7 +29,6 @@ public class TestLineBranchCoverage {
         assertEquals(2, tst.size()); 
     }
 
-    // Line + Branch Coverage: put() and get() : overwrite key and get() value
     @Test
     public void testPutOverwriteValue() {
         tst.put("cat", "1");
@@ -42,7 +37,6 @@ public class TestLineBranchCoverage {
         assertEquals("2", tst.get("cat"));
     }
 
-    // Line + Branch Coverage: put() and get() : put() new key and get() value, and null value
     @Test
     public void testGetReturnsCorrectValue() {
         tst.put("bat", "1");
@@ -50,19 +44,16 @@ public class TestLineBranchCoverage {
         assertNull(tst.get("bad"));
     }
 
-    // get() : null key
     @Test(expected = IllegalArgumentException.class)
     public void testGetNullKeyThrows() {
         tst.get(null); 
     }
 
-    // get() : empty key
     @Test(expected = IllegalArgumentException.class)
     public void testGetEmptyKeyThrows() {
         tst.get("");
     }
 
-    // Branch Coverage: contains() : true and false paths
     @Test
     public void testContainsKey() {
         tst.put("cow", "1");
@@ -70,13 +61,11 @@ public class TestLineBranchCoverage {
         assertFalse(tst.contains("sheep"));
     }
 
-    // contains() : null key
     @Test(expected = IllegalArgumentException.class)
     public void testContainsNullKeyThrows() {
         tst.contains(null);
     }
 
-    // Line + Branch Coverage: longestPrefixOf() : partial match and full match
     @Test
     public void testLongestPrefixOf() {
         tst.put("car", "1");
@@ -86,14 +75,12 @@ public class TestLineBranchCoverage {
         assertEquals("cat", tst.longestPrefixOf("cat"));
     }
 
-    // null input and empty string
     @Test(expected = IllegalArgumentException.class)
     public void testLongestPrefixOfEmptyOrNull() {
         assertNull(tst.longestPrefixOf(""));
         tst.longestPrefixOf(null);
     }
 
-    // Line Coverage: keys() : full trie traversal and appending to queue
     @Test
     public void testKeys() {
         tst.put("apple", "1");
@@ -106,7 +93,6 @@ public class TestLineBranchCoverage {
         assertTrue(keys.contains("avocado"));
     }
 
-    // Branch Coverage: keysWithPrefix() : prefix match and subtree traversal, add prefix
     @Test
     public void testKeysWithPrefix() {
         tst.put("app", "1");
@@ -122,13 +108,16 @@ public class TestLineBranchCoverage {
         assertFalse(list.contains("bat"));
     }
 
-    // keysWithPrefix() : null input
     @Test(expected = IllegalArgumentException.class)
     public void testKeysWithPrefixNullThrows() {
         tst.keysWithPrefix(null);
     }
 
-    // Line + Branch Coverage: keysThatMatch() : exact match, wildcard match, and no match
+    @Test
+    public void testKeysWithPrefixEmptyThrows() {
+        assertEquals(new LinkedList<>(), tst.keysWithPrefix(""));
+    }
+
     @Test
     public void testKeysThatMatchExact() {
         tst.put("dog", "1");
@@ -162,5 +151,55 @@ public class TestLineBranchCoverage {
             result.add(k);
         }
         assertTrue(result.isEmpty());
+    }
+
+    // collect(): x.left != null
+    @Test
+    public void testKeysWithPrefixTriggersLeftCollect() {
+        tst.put("cat", "1");
+        tst.put("car", "2"); // triggers a left child in 'a' level
+        List<String> result = new ArrayList<>();
+        for (String s : tst.keysWithPrefix("ca")) {
+            result.add(s);
+        }
+        assertTrue(result.contains("cat"));
+        assertTrue(result.contains("car"));
+    }
+
+    // keysThatMatch() with branching using '.'
+    @Test
+    public void testKeysThatMatchTriggersLeftMidRight() {
+        tst.put("map", "1");
+        tst.put("man", "2");
+        tst.put("mat", "3");
+        List<String> result = new ArrayList<>();
+        for (String s : tst.keysThatMatch("ma.")) {
+            result.add(s);
+        }
+        assertTrue(result.contains("map"));
+        assertTrue(result.contains("man"));
+        assertTrue(result.contains("mat"));
+    }
+
+    // if (i == pattern.length() - 1 && x.val != null)
+    @Test
+    public void testKeysThatMatchEndNodeMatch() {
+        tst.put("key", "val");
+        List<String> result = new ArrayList<>();
+        for (String s : tst.keysThatMatch("key")) {
+            result.add(s);
+        }
+        assertEquals(List.of("key"), result);
+    }
+
+    // if (i < pattern.length() - 1)
+    @Test
+    public void testKeysThatMatchPatternMidBranch() {
+        tst.put("rate", "1");
+        List<String> result = new ArrayList<>();
+        for (String s : tst.keysThatMatch("ra.e")) {
+            result.add(s);
+        }
+        assertTrue(result.contains("rate"));
     }
 }
