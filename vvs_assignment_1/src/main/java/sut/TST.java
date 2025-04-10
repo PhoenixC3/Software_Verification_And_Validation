@@ -234,4 +234,49 @@ public class TST<T> {
         	collect(x.right, prefix, i, pattern, queue);
     }
 
+    /**
+     * Deletes the key (and associated value) from the symbol table.
+     * If the key is not present, the symbol table is unchanged.
+     * @param key the key to delete
+     * @throws IllegalArgumentException if {@code key} is {@code null}
+     */
+    public void delete(String key) {
+        if (key == null) 
+            throw new IllegalArgumentException("calls delete() with null key");
+        root = delete(root, key, 0);
+    }
+
+    private Node<T> delete(Node<T> x, String key, int d) {
+        if (x == null) return null;
+        char c = key.charAt(d);
+        if      (c < x.c) x.left  = delete(x.left,  key, d);
+        else if (c > x.c) x.right = delete(x.right, key, d);
+        else if (d < key.length() - 1) x.mid = delete(x.mid, key, d+1);
+        else x.val = null;
+
+        if (x.val != null) return x;
+        if (x.left != null || x.mid != null || x.right != null) return x;
+        return null;
+    }
+
+    /**
+     * Compares this TST with another for equality.
+     * @param obj the other TST
+     * @return {@code true} if the two TSTs are equal, {@code false} otherwise
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        TST<?> other = (TST<?>) obj;
+        return equals(this.root, other.root);
+    }
+
+    private boolean equals(Node<T> x, Node<?> y) {
+        if (x == null && y == null) return true;
+        if (x == null || y == null) return false;
+        if (x.c != y.c || !Objects.equals(x.val, y.val)) return false;
+        return equals(x.left, y.left) && equals(x.mid, y.mid) && equals(x.right, y.right);
+    }
+
 }
