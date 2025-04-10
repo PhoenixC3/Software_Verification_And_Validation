@@ -5,6 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -115,7 +116,7 @@ public class TestLineBranchCoverage {
 
     @Test
     public void testKeysWithPrefixEmptyThrows() {
-        assertEquals(new LinkedList<>(), tst.keysWithPrefix(""));
+        assertEquals(Collections.emptyList(), tst.keysWithPrefix(""));
     }
 
     @Test
