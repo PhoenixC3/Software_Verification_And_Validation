@@ -241,21 +241,28 @@ public class TST<T> {
      * @throws IllegalArgumentException if {@code key} is {@code null}
      */
     public void delete(String key) {
-        if (key == null) 
+        if (key == null)
             throw new IllegalArgumentException("calls delete() with null key");
-        root = delete(root, key, 0);
+        
+        if (contains(key)) {
+            root = delete(root, key, 0);
+            n--; // Decrement size only if key was actually in the trie
+        }
     }
 
     private Node<T> delete(Node<T> x, String key, int d) {
         if (x == null) return null;
+    
         char c = key.charAt(d);
         if      (c < x.c) x.left  = delete(x.left,  key, d);
         else if (c > x.c) x.right = delete(x.right, key, d);
         else if (d < key.length() - 1) x.mid = delete(x.mid, key, d+1);
         else x.val = null;
-
-        if (x.val != null) return x;
-        if (x.left != null || x.mid != null || x.right != null) return x;
+    
+        // Only return non-null node if it has value or non-null children
+        if (x.val != null || x.left != null || x.mid != null || x.right != null) {
+            return x;
+        }
         return null;
     }
 
@@ -269,13 +276,25 @@ public class TST<T> {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         TST<?> other = (TST<?>) obj;
-        return equals(this.root, other.root);
+
+        // Step 1: Compare sizes
+        if (this.size() != other.size()) return false;
+
+        // Step 2: Compare key-value pairs
+        for (String key : this.keys()) {
+            if (!Objects.equals(this.get(key), other.get(key))) {
+                return false;
+            }
+        }
+        return true;
     }
 
-    private boolean equals(Node<T> x, Node<?> y) {
-        if (x == null && y == null) return true;
-        if (x == null || y == null) return false;
-        if (x.c != y.c || !Objects.equals(x.val, y.val)) return false;
-        return equals(x.left, y.left) && equals(x.mid, y.mid) && equals(x.right, y.right);
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        for (String key : this.keys()) {
+            hash += Objects.hash(key, this.get(key));
+        }
+        return hash;
     }
 }
