@@ -1,6 +1,8 @@
 package sut;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.Objects;
+import java.util.Queue;
 
 /******************************************************************************
  *  Symbol table with string keys using a ternary search trie (TST).

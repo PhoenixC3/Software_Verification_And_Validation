@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: sut.TestLineBranchCoverage
 -------------------------------------------------------------------------------
-Tests run: 21, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 sec - in sut.TestLineBranchCoverage
+Tests run: 18, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 sec - in sut.TestLineBranchCoverage

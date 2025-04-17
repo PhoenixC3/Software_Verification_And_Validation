@@ -4,7 +4,9 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-// All-Coupling-Use-Paths Coverage for private method put
+// All-Coupling-Use-Paths Coverage for private method put()
+// For each variable x, cover at least one path from its last definition (def)
+// to its first use (use) in another statement without redefining it.
 
 public class TestAllCouplingUsePathsCoverage {
 

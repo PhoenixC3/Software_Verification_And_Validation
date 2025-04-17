@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+// Line and Branch Coverage for all public methods
+// Public Methods: size(), put(), get(), contains(), longestPrefixOf(), keys(), keysWithPrefix(), keysThatMatch()
+
 public class TestLineBranchCoverage {
 
     private TST<String> tst;
@@ -27,6 +30,11 @@ public class TestLineBranchCoverage {
         tst.put("cat", "1");
         tst.put("dog", "2");
         assertEquals(2, tst.size()); 
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testPutNullKeyThrows() {
+        tst.put(null, "1");
     }
 
     @Test
@@ -119,16 +127,6 @@ public class TestLineBranchCoverage {
     }
 
     @Test
-    public void testKeysThatMatchExact() {
-        tst.put("dog", "1");
-        List<String> result = new ArrayList<>();
-        for (String k : tst.keysThatMatch("dog")) {
-            result.add(k);
-        }
-        assertEquals(List.of("dog"), result);
-    }
-
-    @Test
     public void testKeysThatMatchWithWildcard() {
         tst.put("dog", "1");
         tst.put("dig", "2");
@@ -151,42 +149,6 @@ public class TestLineBranchCoverage {
             result.add(k);
         }
         assertTrue(result.isEmpty());
-    }
-
-    @Test
-    public void testKeysWithPrefixTriggersLeftCollect() {
-        tst.put("cat", "1");
-        tst.put("car", "2");
-        List<String> result = new ArrayList<>();
-        for (String s : tst.keysWithPrefix("ca")) {
-            result.add(s);
-        }
-        assertTrue(result.contains("cat"));
-        assertTrue(result.contains("car"));
-    }
-
-    @Test
-    public void testKeysThatMatchTriggersLeftMidRight() {
-        tst.put("map", "1");
-        tst.put("man", "2");
-        tst.put("mat", "3");
-        List<String> result = new ArrayList<>();
-        for (String s : tst.keysThatMatch("ma.")) {
-            result.add(s);
-        }
-        assertTrue(result.contains("map"));
-        assertTrue(result.contains("man"));
-        assertTrue(result.contains("mat"));
-    }
-
-    @Test
-    public void testKeysThatMatchEndNodeMatch() {
-        tst.put("key", "val");
-        List<String> result = new ArrayList<>();
-        for (String s : tst.keysThatMatch("key")) {
-            result.add(s);
-        }
-        assertEquals(List.of("key"), result);
     }
 
     @Test

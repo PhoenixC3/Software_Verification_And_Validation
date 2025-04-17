@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="sut.TestBaseChoiceCoverage" time="0" tests="6" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="sut.TestBaseChoiceCoverage" time="0.001" tests="6" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="java.vm.version" value="21.0.2+13-LTS-58"/>
@@ -28,7 +28,7 @@
     <property name="classworlds.conf" value="C:\Program Files\apache-maven-3.9.6\bin\m2.conf"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
     <property name="stdout.encoding" value="cp437"/>
-    <property name="java.library.path" value="C:\Program Files\Java\jdk-21\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Users\Tiago Almeida\AppData\Local\cloud-code\installer\google-cloud-sdk\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Python312\Scripts\;C:\Python312\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\ProgramData\chocolatey\bin;C:\Program Files\nodejs\;C:\Program Files\Java\jdk-21\bin;C:\Program Files\apache-maven-3.9.6\bin;C:\Program Files\dotnet\;;C:\Program Files\Docker\Docker\resources\bin;C:\Users\Tiago Almeida\AppData\Local\Programs\Python\Python311\Scripts\;C:\Users\Tiago Almeida\AppData\Local\Programs\Python\Python311\;C:\Users\Tiago Almeida\AppData\Local\Microsoft\WindowsApps;C:\Users\Tiago Almeida\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Tiago Almeida\AppData\Roaming\npm;C:\Program Files\Java\jdk-21\bin;;c:\Users\Tiago Almeida\.vscode\extensions\ms-python.debugpy-2025.6.0-win32-x64\bundled\scripts\noConfigScripts;c:\Users\Tiago Almeida\AppData\Roaming\Code\User\globalStorage\github.copilot-chat\debugCommand;."/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk-21\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Users\Tiago Almeida\AppData\Local\cloud-code\installer\google-cloud-sdk\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Python312\Scripts\;C:\Python312\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\ProgramData\chocolatey\bin;C:\Program Files\nodejs\;C:\Program Files\Java\jdk-21\bin;C:\Program Files\apache-maven-3.9.6\bin;C:\Program Files\dotnet\;;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\Kubernetes\Minikube;C:\Users\Tiago Almeida\AppData\Local\Programs\Python\Python311\Scripts\;C:\Users\Tiago Almeida\AppData\Local\Programs\Python\Python311\;C:\Users\Tiago Almeida\AppData\Local\Microsoft\WindowsApps;C:\Users\Tiago Almeida\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Tiago Almeida\AppData\Roaming\npm;C:\Program Files\Java\jdk-21\bin;;c:\Users\Tiago Almeida\.vscode\extensions\ms-python.debugpy-2025.6.0-win32-x64\bundled\scripts\noConfigScripts;c:\Users\Tiago Almeida\AppData\Roaming\Code\User\globalStorage\github.copilot-chat\debugCommand;."/>
     <property name="maven.conf" value="C:\Program Files\apache-maven-3.9.6/conf"/>
     <property name="jdk.debug" value="release"/>
     <property name="java.class.version" value="65.0"/>
@@ -44,7 +44,7 @@
     <property name="java.class.path" value="C:\Program Files\apache-maven-3.9.6\boot\plexus-classworlds-2.7.0.jar"/>
     <property name="java.vm.specification.version" value="21"/>
     <property name="sun.arch.data.model" value="64"/>
-    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher clean install"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher install"/>
     <property name="java.home" value="C:\Program Files\Java\jdk-21"/>
     <property name="user.language" value="en"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
@@ -60,10 +60,10 @@
     <property name="sun.cpu.endian" value="little"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase name="testInsertSmallestLexKey" classname="sut.TestBaseChoiceCoverage" time="0"/>
-  <testcase name="testInsertIntoEmptyTrie" classname="sut.TestBaseChoiceCoverage" time="0"/>
-  <testcase name="testInsertLargestLexKey" classname="sut.TestBaseChoiceCoverage" time="0"/>
-  <testcase name="testInsertWithExistingPrefix" classname="sut.TestBaseChoiceCoverage" time="0"/>
-  <testcase name="testInsertTypicalKey" classname="sut.TestBaseChoiceCoverage" time="0"/>
-  <testcase name="testInsertExistingKey" classname="sut.TestBaseChoiceCoverage" time="0"/>
+  <testcase name="testBaseChoice" classname="sut.TestBaseChoiceCoverage" time="0"/>
+  <testcase name="testEmpty" classname="sut.TestBaseChoiceCoverage" time="0"/>
+  <testcase name="testLargest" classname="sut.TestBaseChoiceCoverage" time="0"/>
+  <testcase name="testSmallest" classname="sut.TestBaseChoiceCoverage" time="0"/>
+  <testcase name="testIncludesNewPrefix" classname="sut.TestBaseChoiceCoverage" time="0"/>
+  <testcase name="testIncludesNewKey" classname="sut.TestBaseChoiceCoverage" time="0"/>
 </testsuite>
