@@ -153,11 +153,10 @@ public class TestLineBranchCoverage {
         assertTrue(result.isEmpty());
     }
 
-    // collect(): x.left != null
     @Test
     public void testKeysWithPrefixTriggersLeftCollect() {
         tst.put("cat", "1");
-        tst.put("car", "2"); // triggers a left child in 'a' level
+        tst.put("car", "2");
         List<String> result = new ArrayList<>();
         for (String s : tst.keysWithPrefix("ca")) {
             result.add(s);
@@ -166,7 +165,6 @@ public class TestLineBranchCoverage {
         assertTrue(result.contains("car"));
     }
 
-    // keysThatMatch() with branching using '.'
     @Test
     public void testKeysThatMatchTriggersLeftMidRight() {
         tst.put("map", "1");
@@ -181,7 +179,6 @@ public class TestLineBranchCoverage {
         assertTrue(result.contains("mat"));
     }
 
-    // if (i == pattern.length() - 1 && x.val != null)
     @Test
     public void testKeysThatMatchEndNodeMatch() {
         tst.put("key", "val");
@@ -192,7 +189,6 @@ public class TestLineBranchCoverage {
         assertEquals(List.of("key"), result);
     }
 
-    // if (i < pattern.length() - 1)
     @Test
     public void testKeysThatMatchPatternMidBranch() {
         tst.put("rate", "1");

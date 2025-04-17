@@ -15,19 +15,28 @@ public class TestAllCouplingUsePathsCoverage {
         tst = new TST<>();
     }
 
-    // Covers: key == null
+    // Def: key = null
+    // Use: if (key == null)
     @Test(expected = IllegalArgumentException.class)
     public void testNullKey() {
         tst.put(null, "1");
     }
 
-    // Covers: key.length() == 0
+    // Def: key = ""
+    // Use: if (key.length() == 0)
     @Test(expected = IllegalArgumentException.class)
     public void testEmptyKey() {
         tst.put("", "1");
     }
 
-    // Covers: x == null and d == key.length() - 1
+    // Def1: key = "a"
+    // Use1: key.charAt(d)
+    // Def2: val = "1"
+    // Use2: x.val = val
+    // Def3: c = key.charAt(d)
+    // Use3: x.c = c
+    // Def4: x = null
+    // Use4: x = if (x == null)
     @Test
     public void testInsertSingleKey() {
         tst.put("a", "1");
@@ -35,7 +44,12 @@ public class TestAllCouplingUsePathsCoverage {
         assertEquals(1, tst.size());
     }
 
-    // Covers: c < x.c (go left branch)
+    // Def1: key = "d" ; key = "b"
+    // Use1: key.charAt(d)
+    // Def2: c = key.charAt(d)
+    // Use2: if (c < x.c)
+    // Def3: x = null
+    // Use3: x.left = put(x.left, key, val, d)
     @Test
     public void testLeftBranchCreation() {
         tst.put("d", "1");
@@ -44,7 +58,12 @@ public class TestAllCouplingUsePathsCoverage {
         assertEquals(2, tst.size());
     }
 
-    // Covers: c > x.c (go right branch)
+    // Def1: key = "d" ; key = "f"
+    // Use1: key.charAt(d)
+    // Def2: c = key.charAt(d)
+    // Use2: if (c > x.c)
+    // Def3: x = null
+    // Use3: x.right = put(x.right, key, val, d)
     @Test
     public void testRightBranchCreation() {
         tst.put("d", "1");
@@ -53,7 +72,12 @@ public class TestAllCouplingUsePathsCoverage {
         assertEquals(2, tst.size());
     }
 
-    // Covers: x == null, c == x.c, and d < key.length() - 1
+    // Def1: key = "cat" ; key = "car"
+    // Use1: key.charAt(d)
+    // Def2: c = key.charAt(d)
+    // Use2: if (c == x.c)
+    // Def3: x = null
+    // Use3: x.mid = put(x.mid, key, val, d+1)
     @Test
     public void testMidBranchCreation() {
         tst.put("cat", "1");
@@ -63,7 +87,14 @@ public class TestAllCouplingUsePathsCoverage {
         assertEquals(2, tst.size());
     }
 
-    // Covers: x != null and d == key.length() - 1
+    // Def1: key = "hat"
+    // Use1: key.charAt(d)
+    // Def2: val = "3" ; val = "5"
+    // Use2: x.val = val
+    // Def3: c = key.charAt(d)
+    // Use3: if (c == x.c)
+    // Def4: x = null
+    // Use4: x.val = val
     @Test
     public void testOverwriteValue() {
         tst.put("hat", "3");
@@ -73,7 +104,12 @@ public class TestAllCouplingUsePathsCoverage {
         assertEquals(1, tst.size());
     }
 
-    // Covers: Left-branch condition (c < x.c), with non-null x
+    // Def1: key = "dog" ; key = "cat"
+    // Use1: key.charAt(d)
+    // Def2: c = key.charAt(d)
+    // Use2: if (c < x.c)
+    // Def3: x != null
+    // Use3: x.left = put(x.left, key, val, d)
     @Test
     public void testInsertLeftOfMidTree() {
         tst.put("dog", "10");
@@ -83,7 +119,12 @@ public class TestAllCouplingUsePathsCoverage {
         assertEquals(2, tst.size());
     }
 
-    // Covers: Right-branch condition (c > x.c), with non-null x
+    // Def1: key = "dog" ; key = "cat"
+    // Use1: key.charAt(d)
+    // Def2: c = key.charAt(d)
+    // Use2: if (c > x.c)
+    // Def3: x != null
+    // Use3: x.right = put(x.right, key, val, d)
     @Test
     public void testInsertRightOfMidTree() {
         tst.put("cat", "1");
@@ -93,7 +134,12 @@ public class TestAllCouplingUsePathsCoverage {
         assertEquals(2, tst.size());
     }
 
-    // Covers: Mid branch multiple times (c == x.c and d < key.length() - 1)
+    // Def1: key = "car" ; key = "cart"
+    // Use1: key.charAt(d)
+    // Def2: c = key.charAt(d)
+    // Use2: if (c == x.c)
+    // Def3: x != null
+    // Use3: x.mid = put(x.mid, key, val, d+1)
     @Test
     public void testDeepRecursionInMidBranch() {
         tst.put("car", "1");
