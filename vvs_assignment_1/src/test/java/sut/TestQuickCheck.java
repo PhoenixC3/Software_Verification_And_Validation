@@ -1,156 +1,126 @@
-// package sut;
+package sut;
 
-// import org.junit.runner.RunWith;
-// import com.pholser.junit.quickcheck.Property;
-// import com.pholser.junit.quickcheck.generator.*;
-// import com.pholser.junit.quickcheck.random.SourceOfRandomness;
-// import com.pholser.junit.quickcheck.runner.JUnitQuickcheck;
-// import com.pholser.junit.quickcheck.From;
+import org.junit.runner.RunWith;
+import com.pholser.junit.quickcheck.From;
+import com.pholser.junit.quickcheck.Property;
+import com.pholser.junit.quickcheck.generator.GenerationStatus;
+import com.pholser.junit.quickcheck.generator.Generator;
+import com.pholser.junit.quickcheck.random.SourceOfRandomness;
+import com.pholser.junit.quickcheck.runner.JUnitQuickcheck;
+import static org.junit.Assert.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-// import java.util.*;
-// import java.util.stream.Collectors;
+@RunWith(JUnitQuickcheck.class)
+public class TestQuickCheck {
 
-// import static org.junit.Assert.*;
-// import static org.junit.Assume.assumeTrue;
+    public static class RandomTSTStringGenerator extends Generator<TST<String>> {
+        public static final int MAX_SIZE = 10;
+        public static final int MAX_STRING_LENGTH = 8;
+    
+        public RandomTSTStringGenerator(Class<TST<String>> type) {
+            super(type);
+        }
+    
+        @Override
+        public TST<String> generate(SourceOfRandomness random, GenerationStatus status) {
+            TST<String> tst = new TST<>();
+            int size = 1 + random.nextInt(MAX_SIZE);
+            while (size-- > 0) {
+                String key = generateRandomString(random);
+                tst.put(key, key);
+            }
+            return tst;
+        }
+    
+        private String generateRandomString(SourceOfRandomness random) {
+            int length = 1 + random.nextInt(MAX_STRING_LENGTH);
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < length; i++) {
+                sb.append((char) random.nextChar('a', 'z'));
+            }
+            return sb.toString();
+        }
+    }
 
-// @RunWith(JUnitQuickcheck.class)
-// public class TestQuickCheck {
+    // 1. The order of insertion of different keys does not change the final tree value
+    @Property
+    public void insertionOrderIndependence(@From(RandomTSTStringGenerator.class) TST<String> tree) {
+        assertNotEquals(tree, null);
 
-//     public static class RandomStringListGenerator extends Generator<List<String>> {
-//         private final Random rng = new Random();
+        List<String> words = new ArrayList<>();
+        List<String> wordsToShuffle = new ArrayList<>();
+        for (String key : tree.keys()) {
+            words.add(key);
+            wordsToShuffle.add(key);
+        }
 
-//         public RandomStringListGenerator() {
-//             super((Class<List<String>>) (Class<?>) List.class);
-//         }
+        TST<String> trie1 = new TST<>();
+        for (String word : words) {
+            trie1.put(word, word);
+        }
 
-//         @Override
-//         public List<String> generate(SourceOfRandomness random, GenerationStatus status) {
-//             int size = random.nextInt(1, 10);  // List of 1–10 strings
-//             Set<String> result = new HashSet<>();
-//             while (result.size() < size) {
-//                 String s = generateRandomString(random);
-//                 if (!s.isEmpty()) {
-//                     result.add(s);
-//                 }
-//             }
-//             return new ArrayList<>(result);
-//         }
+        TST<String> trie2 = new TST<>();
+        Collections.shuffle(wordsToShuffle);
+        for (String word : wordsToShuffle) {
+            trie2.put(word, word);
+        }
 
-//         private String generateRandomString(SourceOfRandomness random) {
-//             int length = random.nextInt(1, 8); // Strings of 1–8 characters
-//             StringBuilder sb = new StringBuilder();
-//             for (int i = 0; i < length; i++) {
-//                 sb.append((char) random.nextChar('a', 'z'));
-//             }
-//             return sb.toString();
-//         }
-//     }
+        assertEquals(trie1, trie2);
+    }
 
-//     @Property
-//     public void insertionOrderDoesNotAffectTreeEquality(
-//         @From(RandomStringListGenerator.class) List<String> keys) {
+    // 2. If you remove all keys from a tree, the tree must be empty
+    @Property
+    public void removeAllKeys(@From(RandomTSTStringGenerator.class) TST<String> tree) {
+        assertNotEquals(tree, null);
 
-//         // Make sure keys are unique to avoid ambiguity
-//         Set<String> uniqueKeys = new HashSet<>(keys);
-//         assumeTrue(uniqueKeys.size() == keys.size());
+        for (String key : tree.keys()) {
+            tree.delete(key);
+        }
 
-//         TST<Integer> trie1 = new TST<>();
-//         TST<Integer> trie2 = new TST<>();
+        assertTrue(tree.size() == 0);
+    }
 
-//         Map<String, Integer> keyValues = new LinkedHashMap<>();
-//         int value = 1;
-//         for (String key : keys) {
-//             keyValues.put(key, value++);
-//         }
+    // 3. Given a tree, inserting and then removing the same key value will not change its initial value
+    @Property
+    public void insertRemoveDoesNotChangeInitialValue(@From(RandomTSTStringGenerator.class) TST<String> tree) {
+        assertNotEquals(tree, null);
 
-//         for (Map.Entry<String, Integer> entry : keyValues.entrySet()) {
-//             trie1.put(entry.getKey(), entry.getValue());
-//         }
+        TST<String> initialState = new TST<>();
+        for (String key : tree.keys()) {
+            initialState.put(key, tree.get(key));
+        }
 
-//         List<String> shuffledKeys = new ArrayList<>(keys);
-//         Collections.shuffle(shuffledKeys);
+        String randomKey = tree.keys().iterator().next();
+        tree.delete(randomKey);
 
-//         for (String key : shuffledKeys) {
-//             trie2.put(key, keyValues.get(key));
-//         }
+        tree.put(randomKey, randomKey);
 
-//         assertTrue(trie1.equals(trie2));
-//     }
+        assertEquals(initialState, tree);
+    }
 
-//     @Property
-//     public void deletingAllKeysLeavesEmptyTrie(@From(RandomStringListGenerator.class) List<String> keys) {
-//         TST<Integer> trie = new TST<>();
-//         int value = 42;
+    // 4. Selecting a stricter prefix keysWithPrefix returns a strict subset result. Eg, keysWithPrefix("sub") ⊆ keysWithPrefix("su")
+    @Property
+    public void prefixSubset(@From(RandomTSTStringGenerator.class) TST<String> tree) {
+        assertNotNull(tree);
 
-//         for (String key : keys) {
-//             trie.put(key, value);
-//         }
+        Set<String> keysWithSu = new HashSet<>();
+        for (String key : tree.keysWithPrefix("su")) {
+            keysWithSu.add(key);
+        }
 
-//         for (String key : keys) {
-//             trie.delete(key);
-//         }
+        Set<String> keysWithSub = new HashSet<>();
+        for (String key : tree.keysWithPrefix("sub")) {
+            keysWithSub.add(key);
+        }
 
-//         assertEquals(0, trie.size());
-//         for (String key : keys) {
-//             assertNull(trie.get(key));
-//         }
-//     }
+        assertTrue(keysWithSu.containsAll(keysWithSub));
 
-//     @Property
-//     public void insertThenDeleteYieldsSameTrie(@From(RandomStringListGenerator.class) List<String> keys) {
-//         TST<Integer> original = new TST<>();
-//         for (int i = 0; i < keys.size(); i++) {
-//             original.put(keys.get(i), i);
-//         }
-
-//         for (String key : keys) {
-//             TST<Integer> copy = cloneTrie(original);
-
-//             // Generate a key that does not already exist
-//             String newKey = key + "_extra";
-//             assumeTrue(!original.contains(newKey));
-
-//             copy.put(newKey, 999);
-//             copy.delete(newKey);
-//             assertTrue(original.equals(copy));
-//         }
-//     }
-
-//     @Property(trials = 50)
-//     public void stricterPrefixGivesSubset(
-//         @From(RandomStringListGenerator.class) List<String> keys
-//     ) {
-//         // Ensure we always have at least one "sub..." prefixed key
-//         keys = new ArrayList<>(keys.stream()
-//             .filter(s -> s.length() >= 3)
-//             .limit(20)
-//             .collect(Collectors.toList()));
-
-//         // Inject a known prefix string if necessary
-//         if (keys.stream().noneMatch(s -> s.startsWith("su"))) {
-//             keys.add("submarine"); // or "sunlight", "subzero" — guaranteed match
-//         }
-
-//         TST<Integer> trie = new TST<>();
-//         for (int i = 0; i < keys.size(); i++) {
-//             trie.put(keys.get(i), i);
-//         }
-
-//         Set<String> suMatches = new HashSet<>();
-//         for (String s : trie.keysWithPrefix("su")) suMatches.add(s);
-
-//         Set<String> subMatches = new HashSet<>();
-//         for (String s : trie.keysWithPrefix("sub")) subMatches.add(s);
-
-//         // Actual property check
-//         assertTrue("Subprefix result not subset of prefix result", suMatches.containsAll(subMatches));
-//     }
-
-//     private <T> TST<T> cloneTrie(TST<T> original) {
-//         TST<T> clone = new TST<>();
-//         for (String key : original.keys()) {
-//             clone.put(key, original.get(key));
-//         }
-//         return clone;
-//     }
-// }
+        if (!keysWithSub.isEmpty()) {
+            assertTrue(keysWithSu.size() > keysWithSub.size());
+        }
+    }
+}

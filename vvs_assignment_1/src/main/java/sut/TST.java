@@ -248,7 +248,7 @@ public class TST<T> {
         
         if (contains(key)) {
             root = delete(root, key, 0);
-            n--; // Decrement size only if key was actually in the trie
+            n--;
         }
     }
 
@@ -261,7 +261,6 @@ public class TST<T> {
         else if (d < key.length() - 1) x.mid = delete(x.mid, key, d+1);
         else x.val = null;
     
-        // Only return non-null node if it has value or non-null children
         if (x.val != null || x.left != null || x.mid != null || x.right != null) {
             return x;
         }
@@ -279,24 +278,14 @@ public class TST<T> {
         if (obj == null || getClass() != obj.getClass()) return false;
         TST<?> other = (TST<?>) obj;
 
-        // Step 1: Compare sizes
         if (this.size() != other.size()) return false;
 
-        // Step 2: Compare key-value pairs
         for (String key : this.keys()) {
             if (!Objects.equals(this.get(key), other.get(key))) {
                 return false;
             }
         }
-        return true;
-    }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        for (String key : this.keys()) {
-            hash += Objects.hash(key, this.get(key));
-        }
-        return hash;
+        return true;
     }
 }
