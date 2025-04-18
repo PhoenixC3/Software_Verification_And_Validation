@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="sut.TestEdgePairPrimePathCoverage" time="0" tests="26" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="sut.TestEdgePairPrimePathCoverage" time="0.001" tests="26" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="java.vm.version" value="21.0.2+13-LTS-58"/>
@@ -44,7 +44,7 @@
     <property name="java.class.path" value="C:\Program Files\apache-maven-3.9.6\boot\plexus-classworlds-2.7.0.jar"/>
     <property name="java.vm.specification.version" value="21"/>
     <property name="sun.arch.data.model" value="64"/>
-    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher install"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher clean install"/>
     <property name="java.home" value="C:\Program Files\Java\jdk-21"/>
     <property name="user.language" value="en"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
@@ -84,6 +84,6 @@
   <testcase name="pp15" classname="sut.TestEdgePairPrimePathCoverage" time="0"/>
   <testcase name="pp16" classname="sut.TestEdgePairPrimePathCoverage" time="0"/>
   <testcase name="pp17" classname="sut.TestEdgePairPrimePathCoverage" time="0"/>
-  <testcase name="pp18" classname="sut.TestEdgePairPrimePathCoverage" time="0"/>
+  <testcase name="pp18" classname="sut.TestEdgePairPrimePathCoverage" time="0.001"/>
   <testcase name="pp19" classname="sut.TestEdgePairPrimePathCoverage" time="0"/>
 </testsuite>

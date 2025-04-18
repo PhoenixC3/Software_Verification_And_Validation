@@ -44,7 +44,7 @@
     <property name="java.class.path" value="C:\Program Files\apache-maven-3.9.6\boot\plexus-classworlds-2.7.0.jar"/>
     <property name="java.vm.specification.version" value="21"/>
     <property name="sun.arch.data.model" value="64"/>
-    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher install"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher clean install"/>
     <property name="java.home" value="C:\Program Files\Java\jdk-21"/>
     <property name="user.language" value="en"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
@@ -67,7 +67,7 @@
   <testcase name="testRightBranchCreation" classname="sut.TestAllCouplingUsePathsCoverage" time="0"/>
   <testcase name="testInsertSingleKey" classname="sut.TestAllCouplingUsePathsCoverage" time="0"/>
   <testcase name="testDeepRecursionInMidBranch" classname="sut.TestAllCouplingUsePathsCoverage" time="0"/>
-  <testcase name="testLeftBranchCreation" classname="sut.TestAllCouplingUsePathsCoverage" time="0.001"/>
+  <testcase name="testLeftBranchCreation" classname="sut.TestAllCouplingUsePathsCoverage" time="0"/>
   <testcase name="testNullKey" classname="sut.TestAllCouplingUsePathsCoverage" time="0"/>
   <testcase name="testEmptyKey" classname="sut.TestAllCouplingUsePathsCoverage" time="0"/>
 </testsuite>

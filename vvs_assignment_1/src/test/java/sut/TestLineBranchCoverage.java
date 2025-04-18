@@ -81,11 +81,29 @@ public class TestLineBranchCoverage {
         assertEquals("car", tst.longestPrefixOf("cargo"));
         assertEquals("cat", tst.longestPrefixOf("cat"));
     }
+    
+    @Test
+    public void testLongestPrefixOfNoMatch() {
+        tst.put("dog", "1");
+        tst.put("deer", "2");
+        tst.put("deal", "3");
+
+        assertEquals("", tst.longestPrefixOf("cat"));
+    }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testLongestPrefixOfEmptyOrNull() {
-        assertNull(tst.longestPrefixOf(""));
+    public void testLongestPrefixOfNull() {
         tst.longestPrefixOf(null);
+    }
+    
+    @Test
+    public void testLongestPrefixOfEmpty() {
+    	assertNull(tst.longestPrefixOf(""));
+    }
+    
+    @Test
+    public void testLongestPrefixOfWithEmptyTrie() {
+        assertEquals("", tst.longestPrefixOf("anything"));
     }
 
     @Test

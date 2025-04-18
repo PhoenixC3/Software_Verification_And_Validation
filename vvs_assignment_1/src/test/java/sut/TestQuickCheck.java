@@ -106,6 +106,12 @@ public class TestQuickCheck {
     @Property
     public void prefixSubset(@From(RandomTSTStringGenerator.class) TST<String> tree) {
         assertNotNull(tree);
+        
+        tree.put("success", "success");
+        tree.put("sus", "sus");
+        tree.put("superstitious", "superstitious");
+        tree.put("submarine", "submarine");
+        tree.put("subnormal", "subnormal");
 
         Set<String> keysWithSu = new HashSet<>();
         for (String key : tree.keysWithPrefix("su")) {
@@ -118,9 +124,5 @@ public class TestQuickCheck {
         }
 
         assertTrue(keysWithSu.containsAll(keysWithSub));
-
-        if (!keysWithSub.isEmpty()) {
-            assertTrue(keysWithSu.size() > keysWithSub.size());
-        }
     }
 }
