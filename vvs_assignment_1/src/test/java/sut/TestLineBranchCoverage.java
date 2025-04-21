@@ -90,6 +90,13 @@ public class TestLineBranchCoverage {
 
         assertEquals("", tst.longestPrefixOf("cat"));
     }
+    
+    @Test
+    public void testLongestPrefixOfExistsButNoMatch() {
+        tst.put("abc", "1");
+
+        assertEquals("", tst.longestPrefixOf("ab"));
+    }
 
     @Test(expected = IllegalArgumentException.class)
     public void testLongestPrefixOfNull() {

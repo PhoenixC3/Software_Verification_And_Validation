@@ -45,7 +45,19 @@ public class TestAllDuPathsCoverage {
     public void setUp() {
         tst = new TST<>();
     }
-
+    
+    // Path: [1,2]
+    @Test(expected = IllegalArgumentException.class)
+    public void adNull() {
+    	tst.longestPrefixOf(null);
+    }
+    
+    // Path: [1,3,4]
+    @Test
+    public void adEmpty() {
+        assertNull(tst.longestPrefixOf(""));
+    }
+    
     // Path: [1,3,5,6,16]
     @Test
     public void ad1() {

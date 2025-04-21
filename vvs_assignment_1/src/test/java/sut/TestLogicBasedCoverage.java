@@ -8,8 +8,10 @@ import static org.junit.Assert.*;
 // justify your option
 
 // Selected Coverage Criteria: PREDICATE COVERAGE (PC)
-// Well-suited due to the logic-heavy control flow in longestPrefixOf
-// Sufficient to uncover common faults (null/empty handling, branching errors, prefix logic)
+// It guarantees that each decision point is tested for both possible outcomes 
+// (e.g., a null input vs. a valid string, an empty string vs. a non-empty string, traversing the trie vs. terminating early). 
+// It exposes edge cases, like null queries, empty strings, and scenarios where no prefix matches. It helps validate correct 
+// traversal logic in the while loop and that the substring computation is only reached with valid conditions.
 
 // List of Predicates:
 // (query == null)
