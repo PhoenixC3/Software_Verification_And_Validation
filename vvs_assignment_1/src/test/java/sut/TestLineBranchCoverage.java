@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-// Line and Branch Coverage for all public methods
+// Line and Branch Coverage for all public methods.
 // Public Methods: size(), put(), get(), contains(), longestPrefixOf(), keys(), keysWithPrefix(), keysThatMatch()
 
 public class TestLineBranchCoverage {
@@ -19,23 +19,27 @@ public class TestLineBranchCoverage {
         tst = new TST<>();
     }
 
+    // ----------------------------
+    // LINE COVERAGE TESTS
+    // ----------------------------
+
+    // --- size() ---
+    // Gets the size of the trie
     @Test
     public void testSizeInitiallyZero() {
-        assertEquals(0, tst.size()); 
+        assertEquals(0, tst.size());
     }
 
+    // --- put() ---
+    // Insertion of keys increases size
     @Test
     public void testPutAndSizeIncrements() {
         tst.put("cat", "1");
         tst.put("dog", "2");
-        assertEquals(2, tst.size()); 
+        assertEquals(2, tst.size());
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testPutNullKeyThrows() {
-        tst.put(null, "1");
-    }
-
+    // Overwrites existing value but does not change size
     @Test
     public void testPutOverwriteValue() {
         tst.put("cat", "1");
@@ -44,6 +48,8 @@ public class TestLineBranchCoverage {
         assertEquals("2", tst.get("cat"));
     }
 
+    // --- get() ---
+    // Retrieves correct value if exists
     @Test
     public void testGetReturnsCorrectValue() {
         tst.put("bat", "1");
@@ -51,16 +57,8 @@ public class TestLineBranchCoverage {
         assertNull(tst.get("bad"));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetNullKeyThrows() {
-        tst.get(null); 
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetEmptyKeyThrows() {
-        tst.get("");
-    }
-
+    // --- contains() ---
+    // Checks if key exists in the trie
     @Test
     public void testContainsKey() {
         tst.put("cow", "1");
@@ -68,11 +66,8 @@ public class TestLineBranchCoverage {
         assertFalse(tst.contains("sheep"));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testContainsNullKeyThrows() {
-        tst.contains(null);
-    }
-
+    // --- longestPrefixOf() ---
+    // Finds the longest prefix that matches the query
     @Test
     public void testLongestPrefixOf() {
         tst.put("car", "1");
@@ -81,38 +76,18 @@ public class TestLineBranchCoverage {
         assertEquals("car", tst.longestPrefixOf("cargo"));
         assertEquals("cat", tst.longestPrefixOf("cat"));
     }
-    
+
+    // No prefix matches
     @Test
     public void testLongestPrefixOfNoMatch() {
         tst.put("dog", "1");
         tst.put("deer", "2");
         tst.put("deal", "3");
-
         assertEquals("", tst.longestPrefixOf("cat"));
     }
-    
-    @Test
-    public void testLongestPrefixOfExistsButNoMatch() {
-        tst.put("abc", "1");
 
-        assertEquals("", tst.longestPrefixOf("ab"));
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testLongestPrefixOfNull() {
-        tst.longestPrefixOf(null);
-    }
-    
-    @Test
-    public void testLongestPrefixOfEmpty() {
-    	assertNull(tst.longestPrefixOf(""));
-    }
-    
-    @Test
-    public void testLongestPrefixOfWithEmptyTrie() {
-        assertEquals("", tst.longestPrefixOf("anything"));
-    }
-
+    // --- keys() ---
+    // Collects all keys from the trie
     @Test
     public void testKeys() {
         tst.put("apple", "1");
@@ -125,6 +100,8 @@ public class TestLineBranchCoverage {
         assertTrue(keys.contains("avocado"));
     }
 
+    // --- keysWithPrefix() ---
+    // Returns keys with the specified prefix
     @Test
     public void testKeysWithPrefix() {
         tst.put("app", "1");
@@ -140,16 +117,8 @@ public class TestLineBranchCoverage {
         assertFalse(list.contains("bat"));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testKeysWithPrefixNullThrows() {
-        tst.keysWithPrefix(null);
-    }
-
-    @Test
-    public void testKeysWithPrefixEmptyThrows() {
-        assertEquals(Collections.emptyList(), tst.keysWithPrefix(""));
-    }
-
+    // --- keysThatMatch() ---
+    // Matches keys with the given wildcard pattern
     @Test
     public void testKeysThatMatchWithWildcard() {
         tst.put("dog", "1");
@@ -165,6 +134,7 @@ public class TestLineBranchCoverage {
         assertEquals(3, matches.size());
     }
 
+    // No matches with pattern
     @Test
     public void testKeysThatMatchNoMatch() {
         tst.put("apple", "1");
@@ -175,6 +145,7 @@ public class TestLineBranchCoverage {
         assertTrue(result.isEmpty());
     }
 
+    // Matches pattern at mid-branch of trie
     @Test
     public void testKeysThatMatchPatternMidBranch() {
         tst.put("rate", "1");
@@ -183,5 +154,75 @@ public class TestLineBranchCoverage {
             result.add(s);
         }
         assertTrue(result.contains("rate"));
+    }
+
+    // ----------------------------
+    // BRANCH COVERAGE TESTS
+    // ----------------------------
+
+    // --- put() ---
+    // Null key in put() method
+    @Test(expected = IllegalArgumentException.class)
+    public void testPutNullKeyThrows() {
+        tst.put(null, "1");
+    }
+
+    // --- get() ---
+    // Null key in get() method
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetNullKeyThrows() {
+        tst.get(null);
+    }
+
+    // Empty key in get()
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetEmptyKeyThrows() {
+        tst.get("");
+    }
+
+    // --- contains() ---
+    // Null key in contains()
+    @Test(expected = IllegalArgumentException.class)
+    public void testContainsNullKeyThrows() {
+        tst.contains(null);
+    }
+
+    // --- longestPrefixOf() ---
+    // Null query in longestPrefixOf()
+    @Test(expected = IllegalArgumentException.class)
+    public void testLongestPrefixOfNull() {
+        tst.longestPrefixOf(null);
+    }
+
+    // Empty query in longestPrefixOf()
+    @Test
+    public void testLongestPrefixOfEmpty() {
+        assertNull(tst.longestPrefixOf(""));
+    }
+
+    // Prefix exists, but no match
+    @Test
+    public void testLongestPrefixOfExistsButNoMatch() {
+        tst.put("abc", "1");
+        assertEquals("", tst.longestPrefixOf("ab"));
+    }
+
+    // Empty trie condition in longestPrefixOf()
+    @Test
+    public void testLongestPrefixOfWithEmptyTrie() {
+        assertEquals("", tst.longestPrefixOf("anything"));
+    }
+
+    // --- keysWithPrefix() ---
+    // Null prefix in keysWithPrefix()
+    @Test(expected = IllegalArgumentException.class)
+    public void testKeysWithPrefixNullThrows() {
+        tst.keysWithPrefix(null);
+    }
+
+    // Empty prefix in keysWithPrefix()
+    @Test
+    public void testKeysWithPrefixEmptyThrows() {
+        assertEquals(Collections.emptyList(), tst.keysWithPrefix(""));
     }
 }

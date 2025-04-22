@@ -8,6 +8,20 @@ import static org.junit.Assert.*;
 // For each variable x, cover at least one path from its last definition (def)
 // to its first use (use) in another statement without redefining it.
 
+//Last Defs:
+// key: {1}
+// val: {1}
+// x: {1,4}
+// d: {1,10}
+// x’: {vi,viii,x,xi}
+
+// First Uses:
+// key: {i}
+// val: {vi,viii,x,xi}
+// x: {ii}
+// d: {i}
+// x’: {12}
+
 public class TestAllCouplingUsePathsCoverage {
 
     private TST<String> tst;
@@ -17,137 +31,102 @@ public class TestAllCouplingUsePathsCoverage {
         tst = new TST<>();
     }
 
-    // Def: key = null
-    // Use: if (key == null)
-    @Test(expected = IllegalArgumentException.class)
-    public void testNullKey() {
-        tst.put(null, "1");
-    }
-
-    // Def: key = ""
-    // Use: if (key.length() == 0)
-    @Test(expected = IllegalArgumentException.class)
-    public void testEmptyKey() {
-        tst.put("", "1");
-    }
-
-    // Def1: key = "a"
-    // Use1: key.charAt(d)
-    // Def2: val = "1"
-    // Use2: x.val = val
-    // Def3: c = key.charAt(d)
-    // Use3: x.c = c
-    // Def4: x = null
-    // Use4: x = if (x == null)
+    // key: {1} -> key: {i}
     @Test
-    public void testInsertSingleKey() {
-        tst.put("a", "1");
-        assertEquals("1", tst.get("a"));
-        assertEquals(1, tst.size());
+    public void keyRecursion() {
+        tst.put("ab", "1");
+        assertEquals("1", tst.get("ab"));
     }
 
-    // Def1: key = "d" ; key = "b"
-    // Use1: key.charAt(d)
-    // Def2: c = key.charAt(d)
-    // Use2: if (c < x.c)
-    // Def3: x = null
-    // Use3: x.left = put(x.left, key, val, d)
+    // val: {1} -> val: {vi}
     @Test
-    public void testLeftBranchCreation() {
-        tst.put("d", "1");
-        tst.put("b", "2");
-        assertEquals("2", tst.get("b"));
-        assertEquals(2, tst.size());
+    public void valRecursionLeftBranch() {
+        tst.put("cb", "1");
+        tst.put("ca", "2");
+        assertEquals("2", tst.get("ca"));
     }
 
-    // Def1: key = "d" ; key = "f"
-    // Use1: key.charAt(d)
-    // Def2: c = key.charAt(d)
-    // Use2: if (c > x.c)
-    // Def3: x = null
-    // Use3: x.right = put(x.right, key, val, d)
+    // val: {1} -> val: {viii}
     @Test
-    public void testRightBranchCreation() {
-        tst.put("d", "1");
-        tst.put("f", "2");
-        assertEquals("2", tst.get("f"));
-        assertEquals(2, tst.size());
+    public void valRecursionRightBranch() {
+        tst.put("cb", "1");
+        tst.put("cd", "2");
+        assertEquals("2", tst.get("cd"));
     }
 
-    // Def1: key = "cat" ; key = "car"
-    // Use1: key.charAt(d)
-    // Def2: c = key.charAt(d)
-    // Use2: if (c == x.c)
-    // Def3: x = null
-    // Use3: x.mid = put(x.mid, key, val, d+1)
+    // val: {1} -> val: {x}
     @Test
-    public void testMidBranchCreation() {
-        tst.put("cat", "1");
-        tst.put("car", "2");
-        assertEquals("1", tst.get("cat"));
-        assertEquals("2", tst.get("car"));
-        assertEquals(2, tst.size());
+    public void valRecursionMiddleBranch() {
+        tst.put("bb", "1");
+        tst.put("bbb", "2");
+        assertEquals("2", tst.get("bbb"));
     }
 
-    // Def1: key = "hat"
-    // Use1: key.charAt(d)
-    // Def2: val = "3" ; val = "5"
-    // Use2: x.val = val
-    // Def3: c = key.charAt(d)
-    // Use3: if (c == x.c)
-    // Def4: x = null
-    // Use4: x.val = val
+    // val: {1} -> val: {xi}
     @Test
-    public void testOverwriteValue() {
-        tst.put("hat", "3");
-        assertEquals("3", tst.get("hat"));
-        tst.put("hat", "5");
-        assertEquals("5", tst.get("hat"));
-        assertEquals(1, tst.size());
+    public void valRecursionAssign() {
+        tst.put("bb", "1");
+        tst.put("bb", "2");
+        assertEquals("2", tst.get("bb"));
     }
 
-    // Def1: key = "dog" ; key = "cat"
-    // Use1: key.charAt(d)
-    // Def2: c = key.charAt(d)
-    // Use2: if (c < x.c)
-    // Def3: x != null
-    // Use3: x.left = put(x.left, key, val, d)
+    // x: {1} -> x: {ii}
     @Test
-    public void testInsertLeftOfMidTree() {
-        tst.put("dog", "10");
-        tst.put("cat", "20");
-        assertEquals("10", tst.get("dog"));
-        assertEquals("20", tst.get("cat"));
-        assertEquals(2, tst.size());
+    public void xRecursionToLeft() {
+        tst.put("ba", "1");
+        assertEquals("1", tst.get("ba"));
     }
 
-    // Def1: key = "dog" ; key = "cat"
-    // Use1: key.charAt(d)
-    // Def2: c = key.charAt(d)
-    // Use2: if (c > x.c)
-    // Def3: x != null
-    // Use3: x.right = put(x.right, key, val, d)
+    // x: {4} -> x: {ii}
     @Test
-    public void testInsertRightOfMidTree() {
-        tst.put("cat", "1");
-        tst.put("dog", "2");
-        assertEquals("1", tst.get("cat"));
-        assertEquals("2", tst.get("dog"));
-        assertEquals(2, tst.size());
+    public void xDefinedToLeft() {
+        tst.put("ac", "1");
+        assertEquals("1", tst.get("ac"));
     }
 
-    // Def1: key = "car" ; key = "cart"
-    // Use1: key.charAt(d)
-    // Def2: c = key.charAt(d)
-    // Use2: if (c == x.c)
-    // Def3: x != null
-    // Use3: x.mid = put(x.mid, key, val, d+1)
+    // d: {1} -> d: {i}
     @Test
-    public void testDeepRecursionInMidBranch() {
-        tst.put("car", "1");
-        tst.put("cart", "2");
-        assertEquals("1", tst.get("car"));
-        assertEquals("2", tst.get("cart"));
-        assertEquals(2, tst.size());
+    public void dRecursion() {
+        tst.put("xy", "1");
+        assertEquals("1", tst.get("xy"));
+    }
+
+    // d: {10} -> d: {i}
+    @Test
+    public void dRecursionNext() {
+        tst.put("yzzz", "1");
+        assertEquals("1", tst.get("yzzz"));
+    }
+
+    // x’: {vi} -> x’: {12}
+    @Test
+    public void xLeftRecursiveFinish() {
+        tst.put("cb", "1");
+        tst.put("ca", "2");
+        assertEquals("2", tst.get("ca"));
+    }
+
+    // x’: {viii} -> x’: {12}
+    @Test
+    public void xRightRecursiveFinish() {
+        tst.put("cb", "1");
+        tst.put("cd", "2");
+        assertEquals("2", tst.get("cd"));
+    }
+
+    // x’: {x} -> x’: {12}
+    @Test
+    public void xMidRecursiveFinish() {
+        tst.put("bb", "1");
+        tst.put("bbb", "2");
+        assertEquals("2", tst.get("bbb"));
+    }
+
+    // x’: {xi} -> x’: {12}
+    @Test
+    public void xAssignRecursiveFinish() {
+        tst.put("bb", "1");
+        tst.put("bb", "2");
+        assertEquals("2", tst.get("bb"));
     }
 }

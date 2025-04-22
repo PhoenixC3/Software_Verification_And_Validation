@@ -1,6 +1,0 @@
-sut\TestLineBranchCoverage.class
-sut\TestAllCouplingUsePathsCoverage.class
-sut\TestEdgePairPrimePathCoverage.class
-sut\TestAllDuPathsCoverage.class
-sut\TestBaseChoiceCoverage.class
-sut\TestLogicBasedCoverage.class
