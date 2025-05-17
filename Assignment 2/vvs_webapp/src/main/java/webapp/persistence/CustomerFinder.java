@@ -12,7 +12,7 @@ import java.sql.SQLException;
  * @Version 1.0 (03/02/2015)
  *
  */
-public class CustomerFinder {
+public class CustomerFinder implements ICustomerFinder {
 	
 	/**
 	 * The select customer by VAT SQL statement
@@ -28,6 +28,7 @@ public class CustomerFinder {
 	 * @throws PersistenceException When there is an error getting the customer
 	 * from the database.
 	 */
+	@Override
 	public CustomerRowDataGateway getCustomerByVATNumber (int vat) throws PersistenceException {
 		try (PreparedStatement statement = DataSource.INSTANCE.prepare(GET_CUSTOMER_BY_VAT_NUMBER_SQL)){
 			statement.setInt(1, vat);

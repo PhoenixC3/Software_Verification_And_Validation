@@ -34,10 +34,10 @@
 	</tr>
 	<c:forEach var="addr" items="${addressesHelper.getAddresses()}">
 		<tr class="w3-black">
-			<td>${addr.getAddress().split(";")[0]}</td>
-			<td>${addr.getAddress().split(";")[1]}</td>
-			<td>${addr.getAddress().split(";")[2]}</td>
-			<td>${addr.getAddress().split(";")[3]}</td>
+			<td><c:out value="${addr.getAddress().split(';')[0]}"/></td>
+			<td><c:out value="${addr.getAddress().split(';')[1]}"/></td>
+			<td><c:out value="${addr.getAddress().split(';')[2]}"/></td>
+			<td><c:out value="${addr.getAddress().split(';')[3]}"/></td>
 		</tr>	
 	</c:forEach>
 </table>

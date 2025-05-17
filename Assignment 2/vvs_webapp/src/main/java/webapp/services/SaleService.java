@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import webapp.persistence.CustomerFinder;
 import webapp.persistence.PersistenceException;
 import webapp.persistence.SaleDeliveryRowDataGateway;
 import webapp.persistence.SaleRowDataGateway;
@@ -53,13 +54,20 @@ public enum SaleService {
 	
 	
 	public void addSale(int customerVat) throws ApplicationException {
-		try {
-			SaleRowDataGateway sale = new SaleRowDataGateway(customerVat, new Date());
-			sale.insert();
-			
-		} catch (PersistenceException e) {
-				throw new ApplicationException ("Can't add customer with vat number " + customerVat + ".", e);
-		}
+	    if (!isValidVAT(customerVat))
+	        throw new ApplicationException("Invalid VAT number: " + customerVat);
+	    
+	    try {
+	        // Check if customer exists
+	        CustomerFinder finder = new CustomerFinder();
+	        finder.getCustomerByVATNumber(customerVat); // throws exception on error
+	        
+	        // If we get here, customer exists, so create the sale
+	        SaleRowDataGateway sale = new SaleRowDataGateway(customerVat, new Date());
+	        sale.insert();
+	    } catch (PersistenceException e) {
+	        throw new ApplicationException("Can't add sale for customer with vat number " + customerVat + ". Customer might not exist.", e);
+	    }
 	}
 	
 	public void updateSale(int id) throws ApplicationException {

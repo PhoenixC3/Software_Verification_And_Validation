@@ -6,8 +6,8 @@ import java.util.List;
 import webapp.persistence.AddressRowDataGateway;
 import webapp.persistence.CustomerFinder;
 import webapp.persistence.CustomerRowDataGateway;
+import webapp.persistence.ICustomerFinder;
 import webapp.persistence.PersistenceException;
-
 
 /**
  * Handles customer transactions. 
@@ -20,27 +20,45 @@ import webapp.persistence.PersistenceException;
 public enum CustomerService {
 	INSTANCE;
 	
-	public CustomerDTO getCustomerByVat (int vat) throws ApplicationException {
-		if (!isValidVAT (vat))
-			throw new ApplicationException ("Invalid VAT number: " + vat);
+	// Dependency that can be mocked in tests
+	private ICustomerFinder customerFinder;
+	
+	// Private constructor to initialize the enum with default dependencies
+	private CustomerService() {
+		this.customerFinder = new CustomerFinder();
+	}
+	
+	/**
+	 * Sets the customer finder implementation.
+	 * This method allows dependency injection for testing purposes.
+	 * 
+	 * @param customerFinder The customer finder implementation to use
+	 */
+	public void setCustomerFinder(ICustomerFinder customerFinder) {
+		this.customerFinder = customerFinder;
+	}
+	
+	public CustomerDTO getCustomerByVat(int vat) throws ApplicationException {
+		if (!isValidVAT(vat))
+			throw new ApplicationException("Invalid VAT number: " + vat);
 		else try {
-			CustomerRowDataGateway customer = new CustomerFinder().getCustomerByVATNumber(vat);
+			CustomerRowDataGateway customer = customerFinder.getCustomerByVATNumber(vat);
 			return new CustomerDTO(customer.getCustomerId(), customer.getVAT(), 
 					customer.getDesignation(), customer.getPhoneNumber());
 		} catch (PersistenceException e) {
-				throw new ApplicationException ("Customer with vat number " + vat + " not found.", e);
+			throw new ApplicationException("Customer with vat number " + vat + " not found.", e);
 		}
 	}
 	
 	public void addCustomer(int vat, String designation, int phoneNumber) throws ApplicationException {
-		if (!isValidVAT (vat))
-			throw new ApplicationException ("Invalid VAT number: " + vat);
+		if (!isValidVAT(vat))
+			throw new ApplicationException("Invalid VAT number: " + vat);
 		else try {
 			CustomerRowDataGateway customer = new CustomerRowDataGateway(vat, designation, phoneNumber);
 			customer.insert();
 			
 		} catch (PersistenceException e) {
-				throw new ApplicationException ("Can't add customer with vat number " + vat + ".", e);
+			throw new ApplicationException("Can't add customer with vat number " + vat + ".", e);
 		}
 	}
 	
@@ -55,19 +73,19 @@ public enum CustomerService {
 			CustomersDTO c = new CustomersDTO(list);
 			return c;
 		} catch (PersistenceException e) {
-				throw new ApplicationException ("Error getting all customers", e);
+			throw new ApplicationException("Error getting all customers", e);
 		}
 	}
 	
 	public void addAddressToCustomer(int customerVat, String addr) throws ApplicationException {
-		if (!isValidVAT (customerVat))
-			throw new ApplicationException ("Invalid VAT number: " + customerVat);
+		if (!isValidVAT(customerVat))
+			throw new ApplicationException("Invalid VAT number: " + customerVat);
 		else try {
 			AddressRowDataGateway address = new AddressRowDataGateway(addr, customerVat);
 			address.insert();
 			
 		} catch (PersistenceException e) {
-				throw new ApplicationException ("Can't add the address /n" + addr + "/nTo customer with vat number " + customerVat + ".", e);
+			throw new ApplicationException("Can't add the address /n" + addr + "/nTo customer with vat number " + customerVat + ".", e);
 		}
 	}
 	
@@ -81,36 +99,33 @@ public enum CustomerService {
 			AddressesDTO c = new AddressesDTO(list);
 			return c;
 		} catch (PersistenceException e) {
-				throw new ApplicationException ("Error getting all customers", e);
+			throw new ApplicationException("Error getting all customers", e);
 		}
 	}
 	
-	
-
 	public void updateCustomerPhone(int vat, int phoneNumber) throws ApplicationException {
-		if (!isValidVAT (vat))
-			throw new ApplicationException ("Invalid VAT number: " + vat);
+		if (!isValidVAT(vat))
+			throw new ApplicationException("Invalid VAT number: " + vat);
 		else try {
-			CustomerRowDataGateway customer = new CustomerFinder().getCustomerByVATNumber(vat);
+			CustomerRowDataGateway customer = customerFinder.getCustomerByVATNumber(vat);
 			customer.setPhoneNumber(phoneNumber);
 			customer.updatePhoneNumber();
 		} catch (PersistenceException e) {
-				throw new ApplicationException ("Customer with vat number " + vat + " not found.", e);
+			throw new ApplicationException("Customer with vat number " + vat + " not found.", e);
 		}
 	}
 	
 	public void removeCustomer(int vat) throws ApplicationException {
-		if (!isValidVAT (vat))
-			throw new ApplicationException ("Invalid VAT number: " + vat);
+		if (!isValidVAT(vat))
+			throw new ApplicationException("Invalid VAT number: " + vat);
 		else try {
-			CustomerRowDataGateway customer = new CustomerFinder().getCustomerByVATNumber(vat);
+			CustomerRowDataGateway customer = customerFinder.getCustomerByVATNumber(vat);
 			customer.removeCustomer();
 		} catch (PersistenceException e) {
-				throw new ApplicationException ("Customer with vat number " + vat + " doesn't exist.", e);
+			throw new ApplicationException("Customer with vat number " + vat + " doesn't exist.", e);
 		}
 	}
 
-	 
 	/**
 	 * Checks if a VAT number is valid.
 	 * 
@@ -144,6 +159,4 @@ public enum CustomerService {
 			checkDigitCalc = 0;
 		return checkDigit == checkDigitCalc;
 	}
-
-
 }

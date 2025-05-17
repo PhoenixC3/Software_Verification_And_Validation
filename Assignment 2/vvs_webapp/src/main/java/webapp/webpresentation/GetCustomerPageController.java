@@ -30,24 +30,35 @@ public class GetCustomerPageController extends PageController {
 
 	@Override
 	protected void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		CustomerService cs = CustomerService.INSTANCE;        
-
+		CustomerService cs = CustomerService.INSTANCE;    
+		
 		CustomerHelper ch = new CustomerHelper();
 		request.setAttribute("helper", ch);
+		
 		AddressesHelper ash = new AddressesHelper();
 		request.setAttribute("addressesHelper", ash);
+		
 		try {
 			String vat = request.getParameter("vat");
 			String address = request.getParameter("address");
 			String door = request.getParameter("door");
 			String postalCode = request.getParameter("postalCode");
 			String locality = request.getParameter("locality");
+			
 			if (isInt(ch, vat, "Invalid VAT number") || isInt(ash, vat, "Invalid VAT number")) {
 				int vatNumber = intValue(vat);
 				ch.fillWithCustomer(cs.getCustomerByVat(vatNumber));
+				
 				if(address != null) {
-					cs.addAddressToCustomer(vatNumber, (address + ";" + door + ";" + postalCode + ";" + locality));
+				    // Sanitize inputs to prevent XSS
+				    address = sanitizeInput(address);
+				    door = sanitizeInput(door);
+				    postalCode = sanitizeInput(postalCode);
+				    locality = sanitizeInput(locality);
+				    
+				    cs.addAddressToCustomer(vatNumber, (address + ";" + door + ";" + postalCode + ";" + locality));
 				}
+				
 				AddressesDTO a = cs.getAllAddresses(vatNumber);
 				ash.fillWithAddresses(a.addrs);
 				request.getRequestDispatcher("CustomerInfo.jsp").forward(request, response);
@@ -56,7 +67,20 @@ public class GetCustomerPageController extends PageController {
 			ch.addMessage("It was not possible to fulfill the request: " + e.getMessage());
 			request.getRequestDispatcher("CustomerError.jsp").forward(request, response); 
 		}
-
+	}
+	
+	// Helper method to sanitize input
+	private String sanitizeInput(String input) {
+	    if (input == null) {
+	        return "";
+	    }
+	    
+	    // Replace HTML special characters with their encoded equivalents
+	    return input.replace("&", "&amp;")
+	                .replace("<", "&lt;")
+	                .replace(">", "&gt;")
+	                .replace("\"", "&quot;")
+	                .replace("'", "&#x27;");
 	}
 
 }

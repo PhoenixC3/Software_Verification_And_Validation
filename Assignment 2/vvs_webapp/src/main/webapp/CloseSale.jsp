@@ -27,23 +27,23 @@
 </FORM>
 <c:if test = "${salesHelper.getSales().size() > 0}">
     <table class="w3-table w3-bordered">
-	   <tr class="w3-black">
-		<th>Id</th>
-		<th>Date</th>
-		<th>Total</th>
-		<th>Status</th>
-		<th>Customer Vat Number</th>
-	</tr>
-	<c:forEach var="sales" items="${salesHelper.getSales()}">
-        <tr class="w3-blue-grey">
-			<td>${sales.id}</td>
-			<td>${sales.getDate()}</td>
-			<td>${sales.getTotal()}</td>
-			<td>${sales.getStatus()}</td>
-			<td>${sales.getCustomerVat()}</td>
-		</tr>	
-	</c:forEach>
-</table>
+	   	<tr class="w3-black">
+			<th>Id</th>
+			<th>Date</th>
+			<th>Total</th>
+			<th>Status</th>
+			<th>Customer Vat Number</th>
+		</tr>
+		<c:forEach var="sales" items="${salesHelper.getSales()}">
+	        <tr class="w3-blue-grey">
+				<td>${sales.id}</td>
+				<td>${sales.getDate()}</td>
+				<td>${sales.getTotal()}</td>
+				<td>${sales.getStatus()}</td>
+				<td>${sales.getCustomerVat()}</td>
+			</tr>	
+		</c:forEach>
+	</table>
 </c:if>
         </div>
             <button class="w3-button w3-white w3-round-large w3-allerta" id="botao_home" onclick="window.location.href='index.html'">Home</button>

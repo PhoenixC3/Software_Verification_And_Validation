@@ -59,7 +59,7 @@ private static Destination dataSource;
 		});
 	}
 	
-	// After the update of a costumer contact, that information should be properly saved
+	// After the update of a customer contact, that information should be properly saved
 	@Test
 	public void updateCustomerContactTest() throws ApplicationException {
 		// Existing VAT
@@ -72,7 +72,7 @@ private static Destination dataSource;
 		assertEquals(updatedCustomer.phoneNumber, 999999999);
 	}
 	
-	// After deleting all costumers, the list of all customers should be empty
+	// After deleting all customers, the list of all customers should be empty
 	@Test
 	public void deleteAllCustomersTest() throws ApplicationException {
 		List<CustomerDTO> allCustomers = CustomerService.INSTANCE.getAllCustomers().customers;
@@ -86,7 +86,7 @@ private static Destination dataSource;
 		assertEquals(allCustomersAfter.size(), 0);
 	}
 	
-	// After deleting a certain costumer, it’s possible to add it back without lifting exceptions
+	// After deleting a certain customer, it’s possible to add it back without lifting exceptions
 	@Test
 	public void addCustomerBackTest() throws ApplicationException {
 		List<CustomerDTO> allCustomers = CustomerService.INSTANCE.getAllCustomers().customers;
@@ -108,7 +108,7 @@ private static Destination dataSource;
 		assertTrue(found);
 	}
 	
-	// After deleting a certain costumer, its sales should be removed from the database
+	// After deleting a certain customer, its sales should be removed from the database
 	@Test
 	public void salesRemovedOnCustomerRemoveTest() throws ApplicationException {
 		int existingVAT = 197672337; // JOSE FARIA
@@ -183,13 +183,13 @@ private static Destination dataSource;
 		assertEquals(SaleService.INSTANCE.getSalesDeliveryByVat(existingVAT).sales_delivery.size(), initialSize + 1);
 	}
 	
-	// When retrieving sale deliveries for a customer with multiple deliveries, all deliveries should be returned with the correct customer VAT.
+	// When retrieving sale deliveries for a customer with multiple deliveries, all deliveries should be returned with the correct customer VAT
 	@Test
 	public void addSaleDeliveryReturnsCorrectVATTest() throws ApplicationException {
 		int existingVAT = 197672337; // JOSE FARIA	
 		int saleId = SaleService.INSTANCE.getSaleByCustomerVat(existingVAT).sales.get(0).id;
 		int addrId1 = CustomerService.INSTANCE.getAllAddresses(existingVAT).addrs.get(0).id;
-		int addrId2 = CustomerService.INSTANCE.getAllAddresses(existingVAT).addrs.get(0).id;
+		int addrId2 = CustomerService.INSTANCE.getAllAddresses(existingVAT).addrs.get(1).id;
 		
 		SaleService.INSTANCE.addSaleDelivery(saleId, addrId1);
 		SaleService.INSTANCE.addSaleDelivery(saleId, addrId2);
